@@ -1,0 +1,21 @@
+
+
+
+.site_header {
+    background-color: var(--bg_color);
+    border-bottom: 1px solid var(--border_light);
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+
+.header_nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 25px;
+    height: 60px;
+}
