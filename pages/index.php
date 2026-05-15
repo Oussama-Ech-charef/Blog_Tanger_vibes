@@ -10,13 +10,18 @@
     
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="../assets/css/header.css">
+
+    <link rel="stylesheet" href="../assets/css/footer.css">
 </head>
 <body>
 
 
 <?php require '../includes/header.php'; ?>
 
-<!-- <img src="../assets/images/home.jpg" alt=""> -->
+<img src="../assets/images/home.jpg" alt="" style="width: 200px;">
+
+
+<?php require '../includes/footer.php' ?>
     <script src="../assets/js/main.js"></script>
 </body>
 </html>

@@ -1,0 +1,138 @@
+/* Footer Base */
+.footer {
+    background-color: var(--bg_color);
+    border-top: 1px solid var(--border_light);
+    padding-top: 60px;
+    font-family: var(--font_main);
+}
+
+.footer_top {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 32px 40px;
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+}
+
+/* Footer Logo  */
+.footer .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    font-size: 25px;
+    color: var(--color_dark, #111827);
+    text-decoration: none;
+    margin-bottom: 20px;
+}
+
+.footer .logo_icon {
+    font-size: 30px;
+    color: var(--color_primary, #2563eb);
+}
+
+.footer .logo_text .highlight {
+    color: var(--color_gold, #eab308);
+    font-weight: 600;
+}
+
+.footer_desc {
+    color: var(--color_gray, #6b7280);
+    line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+/* Footer Links & Categories */
+.footer .title {
+    color: var(--color_dark, #111827);
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+ul.footer_links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer_link {
+    color: var(--color_gray, #6b7280);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.footer_link:hover {
+    color: var(--color_primary, #2563eb);
+}
+
+/* Footer Socials */
+.footer_socials {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.footer_icons {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.social_icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--color_light, #f3f4f6);
+    color: var(--color_dark, #111827);
+    text-decoration: none;
+    transition: background 0.2s;
+    font-size: 1.1rem;
+}
+
+.social_icon:hover {
+    background-color: var(--border_light, #e5e7eb);
+}
+
+/* Footer Bottom */
+.footer_bottom {
+    border-top: 1px solid var(--border_light, #e5e7eb);
+    padding: 24px 32px;
+    text-align: center;
+}
+
+.footer_copy {
+    color: var(--color_gray, #6b7280);
+    font-size: 0.9rem;
+    margin: 0;
+}
+
+/* Responsive Design */
+@media (max-width: 900px) {
+    .footer_top {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 600px) {
+    .footer_top {
+        grid-template-columns: 1fr;
+        text-align: center;
+        padding: 0 20px 40px;
+    }
+
+    .footer .logo {
+        justify-content: center;
+    }
+
+    .footer_icons {
+        justify-content: center;
+    }
+}
