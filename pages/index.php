@@ -16,7 +16,7 @@
 
 <?php require '../includes/header.php'; ?>
 
-<img src="../assets/images/home.jpg" alt="">
-    
+<!-- <img src="../assets/images/home.jpg" alt=""> -->
+    <script src="../assets/js/main.js"></script>
 </body>
 </html>
