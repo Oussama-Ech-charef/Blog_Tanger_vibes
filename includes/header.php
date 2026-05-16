@@ -63,14 +63,10 @@
                         </button>
                     </div>
 
-                     <!-- links  desctope-->
 
-                    <ul class="nav_links mobil">
-                        <li><a href="#" class="nav_link">Home</a></li>
-                        <li><a href="#" class="nav_link">Explore</a></li>
-                    </ul>
 
-                   <!-- search desctop -->
+
+                    <!-- search desctop -->
                     <div class="search_mobile">
                         <form action="#" class="search_mobile_form">
                             <i class="fa-solid fa-magnifying-glass search_icon"></i>
@@ -78,6 +74,17 @@
                         </form>
 
                     </div>
+
+                    
+
+                     <!-- links  desctope-->
+
+                    <ul class="nav_links mobil">
+                        <li><a href="#" class="nav_link">Home</a></li>
+                        <li><a href="#" class="nav_link">Explore</a></li>
+                    </ul>
+
+                   
 
 
 
@@ -94,6 +101,9 @@
                                 <a href="#" class="register_link ">Register</a>
                             </div>
                     </div>
+
+
+                    
 
 
         </div>

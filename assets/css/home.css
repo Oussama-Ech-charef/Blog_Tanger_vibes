@@ -3,7 +3,7 @@
 
 .hero_section {
     position: relative;
-    height: 80vh;
+    height: 85vh;
     width: 100%;
     overflow: hidden;
 }
@@ -106,7 +106,7 @@
 }
 
 
-.title {
+.section_header .title {
     font-size: 32px;
     font-weight: 700;
     color: var(--color_primary);
@@ -234,7 +234,11 @@
 
 @media (max-width: 900px) {
     .hero_section {
-        height: 70vh;
+        height: 50vh;
+    }
+
+    .hero_shadow {
+        height: 50vh;
     }
 
     .hero_title {
@@ -244,6 +248,23 @@
     .hero_desc {
         font-size: 16px;
     }
+
+    .grid_place {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .card_place {
+         aspect-ratio: 1/1;
+        max-height: 400px;
+        width: 100%;
+     }
+
+     .card_content {
+        transform: translateY(0);
+        opacity: 1;
+        background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
+     }
 }
 
 @media (max-width: 600px) {
@@ -289,9 +310,36 @@
 
     }
 
+    .latest_section {
+        padding: 40px 20px;
+    }
+
+    .latest_section .title {
+        font-size: 26px;
+    }
+
+    .grid_place .title {
+        font-size: 20px;
+    }
+
 
    
 }
 
+@media (max-width: 600px) {
+     .hero_section {
+        height: 70vh;
+    }
+     .hero_shadow {
+        height: 70vh;
+    }
 
+  
+    .hero_title {
+        font-size: 30px;
+        margin-bottom: 15px;
+    }
+
+    
+}
 
