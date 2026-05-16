@@ -41,6 +41,61 @@
         </section>
 
 
+        <section class="latest_section">
+            <div class="section_header">
+                <h2 class="title">Latest Places</h2>
+                <p class="description">The newest additions to TangierVibes</p>
+            </div>
+
+
+
+            <div class="grid_place">
+
+                <a href="" class="card_place">
+                    <img src="../assets/images/home.jpg" alt="Tanger Vibes">
+                    <div class="card_content">
+
+                        <span class="category"> <i class="fa-solid fa-layer-group"></i> Tangier Spot</span>
+                        <h3 class="title">Plage Achakare</h3>
+                        <p class="location"> <i class="fa-solid fa-location-dot"></i> Tangier, Morocco</p>
+                        <span class="btn">Explore <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </a>
+                <a href="" class="card_place">
+                    <img src="../assets/images/home.jpg" alt="Tanger Vibes">
+                    <div class="card_content">
+
+                        <span class="category"> <i class="fa-solid fa-layer-group"></i> Tangier Spot</span>
+                        <h3 class="title">Plage Achakare</h3>
+                        <p class="location"> <i class="fa-solid fa-location-dot"></i> Tangier, Morocco</p>
+                        <span class="btn">Explore <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </a>
+                <a href="" class="card_place">
+                    <img src="../assets/images/home.jpg" alt="Tanger Vibes">
+                    <div class="card_content">
+
+                        <span class="category"> <i class="fa-solid fa-layer-group"></i> Tangier Spot</span>
+                        <h3 class="title">Plage Achakare</h3>
+                        <p class="location"> <i class="fa-solid fa-location-dot"></i> Tangier, Morocco</p>
+                        <span class="btn">Explore <i class="fa-solid fa-arrow-right"></i></span>
+                    </div>
+                </a>
+
+
+            </div>
+
+            
+
+
+                <div class="footer_section">
+                    <a href="#" class="view_explor">
+                        View All Places <i class="fa-solid fa-arrow-right"></i>
+                    </a>
+                </div>
+        </section>
+
+
 <?php require '../includes/footer.php' ?>
     <script src="../assets/js/main.js"></script>
 </body>
