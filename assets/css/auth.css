@@ -1,0 +1,143 @@
+.login_and_register {
+    min-height: 100vh;
+    padding: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color_light);
+}
+
+.card {
+    width: min(100%, 420px);
+    padding: 32px;
+    border: 1px solid var(--color_border);
+    border-radius: 8px;
+    background: var(--bg_color);
+    box-shadow: var(--detail_shadow);
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+    color: var(--color_dark);
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.logo i {
+    color: var(--color_primary);
+}
+
+.logo span {
+    color: var(--color_gold);
+}
+
+h1 {
+    margin-bottom: 8px;
+    color: var(--color_dark);
+    font-size: 34px;
+}
+
+p {
+    margin-bottom: 24px;
+    color: var(--color_gray);
+    line-height: 1.6;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+form label {
+    color: var(--color_dark);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+form input {
+    height: 48px;
+    margin-bottom: 8px;
+    padding: 0 14px;
+    border: 1px solid var(--color_border);
+    border-radius: 8px;
+    color: var(--color_dark);
+    font: inherit;
+    outline: none;
+}
+
+form input:focus {
+    border-color: var(--color_primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.options {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin: 4px 0 10px;
+    color: var(--color_gray);
+    font-size: 14px;
+}
+
+.options label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--color_gray);
+    font-weight: 500;
+}
+
+.options input {
+    width: auto;
+    height: auto;
+    margin: 0;
+}
+
+a {
+    color: var(--color_primary);
+    font-weight: 700;
+}
+
+.btn {
+    height: 50px;
+    border: none;
+    border-radius: 8px;
+    background: var(--color_primary);
+    color: var(--bg_color);
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background: #1d4ed8;
+}
+
+.switch {
+    margin: 22px 0 0;
+    text-align: center;
+}
+
+@media (max-width: 520px) {
+    .auth {
+        padding: 16px;
+    }
+
+    .box {
+        padding: 24px;
+    }
+
+    h1 {
+        font-size: 29px;
+    }
+
+    .options {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
