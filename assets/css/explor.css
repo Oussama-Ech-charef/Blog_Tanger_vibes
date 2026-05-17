@@ -1,5 +1,6 @@
 .explore_page {
     width: min(1180px, calc(100% - 32px));
+    max-width: 1200px;
     margin: 48px auto;
     margin-top: 75px;
 }

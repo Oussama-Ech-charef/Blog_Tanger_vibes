@@ -1,4 +1,33 @@
 
+<?php
+
+ require '../config/connection.php';
+
+ $stmt = $conn->prepare("
+        select posts.*, categories.cat_name, users.user_name
+        from posts
+        inner join categories on posts.category_id = categories.id_category
+        left join users on posts.user_id = users.id_user
+        where posts.status = 'published'
+        order by posts.created_at desc
+        limit 3
+ ");
+
+ $stmt->execute();
+
+ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+
+?>
+
+
+
+
+
+
+
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -50,49 +79,68 @@
 
 
             <div class="grid_place">
+                    <?php if (!empty($posts)): ?>
+                        <?php foreach ($posts as $post): ?>
 
-                <a href="detail.php" class="card_place">
-                    <img src="../assets/images/home.jpg" alt="Tanger Vibes">
-                    <div class="card_content">
+                            <a href="detail.php?id=<?= $post['id_post']; ?>" class="card_place">
 
-                        <span class="category"> <i class="fa-solid fa-layer-group"></i> Tangier Spot</span>
-                        <h3 class="title">Plage Achakare</h3>
-                        <p class="location"> <i class="fa-solid fa-location-dot"></i> Tangier, Morocco</p>
-                        <span class="btn">Explore <i class="fa-solid fa-arrow-right"></i></span>
-                    </div>
-                </a>
-                <a href="" class="card_place">
-                    <img src="../assets/images/home.jpg" alt="Tanger Vibes">
-                    <div class="card_content">
+                                <img 
+                                    src="<?= htmlspecialchars($post['image']); ?>" 
+                                    alt="<?= htmlspecialchars($post['title']); ?>" 
+                                    loading="lazy"
+                                >
 
-                        <span class="category"> <i class="fa-solid fa-layer-group"></i> Tangier Spot</span>
-                        <h3 class="title">Plage Achakare</h3>
-                        <p class="location"> <i class="fa-solid fa-location-dot"></i> Tangier, Morocco</p>
-                        <span class="btn">Explore <i class="fa-solid fa-arrow-right"></i></span>
-                    </div>
-                </a>
-                <a href="" class="card_place">
-                    <img src="../assets/images/home.jpg" alt="Tanger Vibes">
-                    <div class="card_content">
+                                <div class="card_content">
 
-                        <span class="category"> <i class="fa-solid fa-layer-group"></i> Tangier Spot</span>
-                        <h3 class="title">Plage Achakare</h3>
-                        <p class="location"> <i class="fa-solid fa-location-dot"></i> Tangier, Morocco</p>
-                        <span class="btn">Explore <i class="fa-solid fa-arrow-right"></i></span>
-                    </div>
-                </a>
+                                    <span class="category">
+                                        <i class="fa-solid fa-layer-group"></i>
+                                        <?= htmlspecialchars($post['cat_name']); ?>
+                                    </span>
+
+                                    <h3 class="title">
+                                        <?= htmlspecialchars($post['title']); ?>
+                                    </h3>
+
+                                    <p class="location">
+                                        <i class="fa-solid fa-user"></i>
+                                        By <?= htmlspecialchars($post['user_name'] ?? 'Admin'); ?>
+                                    </p>
+
+                                    <p class="location">
+                                        <i class="fa-solid fa-calendar-days"></i>
+                                        <?= date('M d, Y', strtotime($post['created_at'])); ?>
+                                    </p>
+
+                                    <span class="btn">
+                                        Read More <i class="fa-solid fa-arrow-right"></i>
+                                    </span>
+
+                                </div>
 
 
-            </div>
+                            </a>
+
+                        <?php endforeach; ?>
+                    <?php else: ?>
+
+                        <p class="description">No published places yet.</p>
+
+                    <?php endif; ?>
+                </div>
 
             
 
 
                 <div class="footer_section">
+
                     <a href="explor.php" class="view_explor">
+
                         View All Places <i class="fa-solid fa-arrow-right"></i>
+
                     </a>
+
                 </div>
+
         </section>
 
 
