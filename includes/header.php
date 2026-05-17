@@ -40,8 +40,8 @@
 
 
                             <div class="login_register">
-                                <a href="#" class="login_link">Login</a>
-                                <a href="#" class="register_link ">Register</a>
+                                <a href="../pages/login.php" class="login_link">Login</a>
+                                <a href="../pages/register.php" class="register_link ">Register</a>
                             </div>
                     </div>
                         <!-- menu open  -->
@@ -90,15 +90,15 @@
 
                     <div class="auth_actions_mobil">
 
-                            <div class="dashboard_logout">
+                            <!-- <div class="dashboard_logout">
                                 <a href="#" class="dashboard">Dashboard</a>
                                 <a href="#" class="logout">Logout</a>
-                            </div>
+                            </div> -->
 
 
                             <div class="login_register">
-                                <a href="#" class="login_link">Login</a>
-                                <a href="#" class="register_link ">Register</a>
+                                <a href="../pages/login.php" class="login_link">Login</a>
+                                <a href="../pages/register.php" class="register_link ">Register</a>
                             </div>
                     </div>
 
