@@ -32,7 +32,7 @@
                 
                 <div class="hero_btns">
 
-                    <a href="explore.php" class="btn_explor">
+                    <a href="explor.php" class="btn_explor">
                         Start Exploring
                     </a>
 
@@ -89,7 +89,7 @@
 
 
                 <div class="footer_section">
-                    <a href="#" class="view_explor">
+                    <a href="explor.php" class="view_explor">
                         View All Places <i class="fa-solid fa-arrow-right"></i>
                     </a>
                 </div>

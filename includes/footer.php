@@ -21,7 +21,7 @@
             <h4 class="title">Quick Links</h4>
             <ul class="footer_links">
                 <li><a href="../pages/index.php" class="footer_link">Home</a></li>
-                <li><a href="#" class="footer_link">Explore</a></li>
+                <li><a href="../pages/explor.php" class="footer_link">Explore</a></li>
             </ul>
         </div>
 

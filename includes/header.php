@@ -18,7 +18,7 @@
 
                     <ul class="nav_links desktop">
                         <li><a href="../pages/index.php" class="nav_link">Home</a></li>
-                        <li><a href="#" class="nav_link">Explore</a></li>
+                        <li><a href="../pages/explor.php" class="nav_link">Explore</a></li>
                     </ul>
 
                    <!-- search desctop -->
@@ -33,10 +33,10 @@
                     
                     <div class="auth_actions_desctop">
 
-                            <div class="dashboard_logout">
+                            <!-- <div class="dashboard_logout">
                                 <a href="#" class="dashboard">Dashboard</a>
                                 <a href="#" class="logout">Logout</a>
-                            </div>
+                            </div> -->
 
 
                             <div class="login_register">
@@ -81,7 +81,7 @@
 
                     <ul class="nav_links mobil">
                         <li><a href="../pages/index.php" class="nav_link">Home</a></li>
-                        <li><a href="#" class="nav_link">Explore</a></li>
+                        <li><a href="../pages/explor.php" class="nav_link">Explore</a></li>
                     </ul>
 
                    
