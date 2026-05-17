@@ -131,7 +131,7 @@
 
 .card_place {
     position: relative;
-    border-radius: 15px;
+    border-radius: 8px;
     overflow: hidden;
     display: block;
     aspect-ratio: 2 / 3;

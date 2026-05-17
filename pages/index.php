@@ -51,7 +51,7 @@
 
             <div class="grid_place">
 
-                <a href="" class="card_place">
+                <a href="detail.php" class="card_place">
                     <img src="../assets/images/home.jpg" alt="Tanger Vibes">
                     <div class="card_content">
 

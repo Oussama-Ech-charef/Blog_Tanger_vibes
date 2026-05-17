@@ -9,7 +9,7 @@
 
         <div class="header_nav_desctop">
                     <!-- logo  -->
-                    <a href="#" class="logo">
+                    <a href="../pages/index.php" class="logo">
                         <div class="logo_icon"><i class="fa-solid fa-compass"></i></div> 
                         <span class="logo_text">Tangier <span class="text2">Vibes</span></span>     
                     </a>
@@ -17,7 +17,7 @@
                      <!-- links  desctope-->
 
                     <ul class="nav_links desktop">
-                        <li><a href="#" class="nav_link">Home</a></li>
+                        <li><a href="../pages/index.php" class="nav_link">Home</a></li>
                         <li><a href="#" class="nav_link">Explore</a></li>
                     </ul>
 
@@ -80,7 +80,7 @@
                      <!-- links  desctope-->
 
                     <ul class="nav_links mobil">
-                        <li><a href="#" class="nav_link">Home</a></li>
+                        <li><a href="../pages/index.php" class="nav_link">Home</a></li>
                         <li><a href="#" class="nav_link">Explore</a></li>
                     </ul>
 

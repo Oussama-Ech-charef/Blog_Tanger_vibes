@@ -6,7 +6,7 @@
         
         <!-- logo and content-->
         <div class="footer_logo">
-            <a href="index.php" class="logo">
+            <a href="../pages/index.php" class="logo">
                 <div class="logo_icon"><i class="fa-solid fa-compass"></i></div>
                 <span class="logo_text">Tangier <span class="highlight">Vibes</span></span>
             </a>
@@ -20,7 +20,7 @@
         <div class="footer_links">
             <h4 class="title">Quick Links</h4>
             <ul class="footer_links">
-                <li><a href="#" class="footer_link">Home</a></li>
+                <li><a href="../pages/index.php" class="footer_link">Home</a></li>
                 <li><a href="#" class="footer_link">Explore</a></li>
             </ul>
         </div>
