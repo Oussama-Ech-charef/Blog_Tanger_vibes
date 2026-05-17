@@ -46,13 +46,6 @@ create table if not exists posts (
 );
 
 
-INSERT INTO users (user_name, email, password, role)
-VALUES (
-    'Admin',
-    'admin@tangiervibes.com',
-    '12345',
-    'admin'
-);
 
 
 INSERT INTO categories (cat_name) VALUES

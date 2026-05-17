@@ -144,11 +144,11 @@ a {
 }
 
 @media (max-width: 520px) {
-    .auth {
+    .login_and_register {
         padding: 16px;
     }
 
-    .box {
+    .card {
         padding: 24px;
     }
 
