@@ -46,6 +46,14 @@ p {
     line-height: 1.6;
 }
 
+.error_message{
+    background: #ffebee;
+    color: #c62828;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
 form {
     display: flex;
     flex-direction: column;
