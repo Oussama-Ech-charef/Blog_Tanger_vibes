@@ -103,17 +103,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
 
     <main class="login_and_register">
+        
         <section class="card">
+
             <a href="index.php" class="logo">
                 <i class="fa-solid fa-compass"></i>
                 Tangier <span>Vibes</span>
             </a>
 
             <h1>Register</h1>
+
             <p>Create your Tangier Vibes account.</p>
+
                     <?php if(!empty($error)): ?>
                         <p class="error_message"><?= $error; ?></p>
                     <?php endif; ?>
+
+
             <form action="#" method="POST">
                 <label for="name">Full name</label>
                 <input type="text" id="name" name="name" placeholder="Your name" value="<?= htmlspecialchars($name ?? '') ?>" required>
@@ -128,6 +134,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
 
             <p class="switch">Already have an account? <a href="login.php">Login</a></p>
+
         </section>
     </main>
 

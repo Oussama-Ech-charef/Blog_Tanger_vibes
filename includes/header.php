@@ -2,6 +2,13 @@
  
 
 
+ if (session_status() === PHP_SESSION_NONE) {
+
+    session_start();
+
+ }
+
+
 ?>
 
 <header class="site_header">
@@ -33,16 +40,21 @@
                     
                     <div class="auth_actions_desctop">
 
-                            <!-- <div class="dashboard_logout">
-                                <a href="#" class="dashboard">Dashboard</a>
-                                <a href="#" class="logout">Logout</a>
-                            </div> -->
 
+                            <?php if (isset($_SESSION['id_user'])): ?>
+
+                            <div class="dashboard_logout">
+                                <a href="#" class="dashboard">Dashboard</a>
+                                <a href="../pages/logout.php" class="logout">Logout</a>
+                            </div>
+                            <?php else: ?>
 
                             <div class="login_register">
                                 <a href="../pages/login.php" class="login_link">Login</a>
                                 <a href="../pages/register.php" class="register_link ">Register</a>
                             </div>
+
+                            <?php endif; ?>
                     </div>
                         <!-- menu open  -->
                     <div class="menu">
@@ -89,17 +101,21 @@
 
 
                     <div class="auth_actions_mobil">
+                            <?php if (isset($_SESSION['id_user'])): ?>
 
-                            <!-- <div class="dashboard_logout">
+                            <div class="dashboard_logout">
                                 <a href="#" class="dashboard">Dashboard</a>
-                                <a href="#" class="logout">Logout</a>
-                            </div> -->
+                                <a href="../pages/logout.php" class="logout">Logout</a>
+                            </div>
+                            <?php else: ?>
 
 
                             <div class="login_register">
                                 <a href="../pages/login.php" class="login_link">Login</a>
                                 <a href="../pages/register.php" class="register_link ">Register</a>
                             </div>
+                            <?php endif; ?>
+                           
                     </div>
 
 
