@@ -28,8 +28,8 @@
 
     <div class="detail_container">
 
-        <div class="category">
-            <i class="fa-solid fa-layer-group"></i> TANGERE / <span class="cat_name">BEACH</span>
+        <div class="detail_category">
+            <i class="fa-solid fa-layer-group"></i> TANGIER / <span class="cat_name">BEACH</span>
         </div>
 
 
@@ -41,7 +41,7 @@
             <span><i class="fa-solid fa-comment-dots"></i></i>8 Comments</span>
         </div>
 
-        <img src="../assets/images/home.jpg" width="400px" alt="detial image">
+        <img src="../assets/images/home.jpg" width="400px" alt="detail image">
 
         <div class="content">
             <p>Lorem ipsum dolor sit amet consectetur 
@@ -53,7 +53,7 @@
 
 
         <div class="tags">
-            <span><i class="fa-solid fa-hashtag"></i>Tanegere</span>
+            <span><i class="fa-solid fa-hashtag"></i>Tangier</span>
             <span><i class="fa-solid fa-hashtag"></i>SlowTravel</span>
             <span><i class="fa-solid fa-hashtag"></i>DesertVibes</span>
             <span><i class="fa-solid fa-hashtag"></i>NomadLife</span>
@@ -64,7 +64,7 @@
             <i class="fas fa-share-alt"></i> Share: <a href="#">Facebook</a> /<a href="#">Twitter</a> /<a href="#">WhatsApp</a>
         </div>
 
-        <div class="location">
+        <div class="map_box">
             <iframe
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3241.0!2d-5.8137!3d35.7595!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd0b875cf1b23c99%3A0x4c6d8cc17ce7b75b!2sTanger%2C%20Morocco!5e0!3m2!1sen!2sma!4v1700000000000"
                 width="100%"
@@ -79,34 +79,34 @@
 
         <div class="comments_posts">
             <div class="comment_title">
-                💬 Comments 
+                <i class="fa-solid fa-comment-dots"></i> Comments
                 <span >3</span>
             </div>
         </div>
 
-        <div class="coments_list">
-            <div class="coment_item">
+        <div class="comments_list">
+            <div class="comment_item">
                 <div class="comment_header">
-                    <span class="coment_name"><i class="fa-solid fa-circle-user"></i>Oussama</span>
-                    <span class="coment_date"><i class="fa-solid fa-calendar-days"></i>May 16, 2026</span>
+                    <span class="comment_name"><i class="fa-solid fa-circle-user"></i>Oussama</span>
+                    <span class="comment_date"><i class="fa-solid fa-calendar-days"></i>May 16, 2026</span>
                 </div>
                 <div class="comment_text">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, saepe.
                 </div>
             </div>
-            <div class="coment_item">
+            <div class="comment_item">
                 <div class="comment_header">
-                    <span class="coment_name"><i class="fa-solid fa-circle-user"></i>Oussama</span>
-                    <span class="coment_date"><i class="fa-solid fa-calendar-days"></i>May 16, 2026</span>
+                    <span class="comment_name"><i class="fa-solid fa-circle-user"></i>Oussama</span>
+                    <span class="comment_date"><i class="fa-solid fa-calendar-days"></i>May 16, 2026</span>
                 </div>
                 <div class="comment_text">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, saepe.
                 </div>
             </div>
-            <div class="coment_item">
+            <div class="comment_item">
                 <div class="comment_header">
-                    <span class="coment_name"><i class="fa-solid fa-circle-user"></i>Oussama</span>
-                    <span class="coment_date"><i class="fa-solid fa-calendar-days"></i>May 16, 2026</span>
+                    <span class="comment_name"><i class="fa-solid fa-circle-user"></i>Oussama</span>
+                    <span class="comment_date"><i class="fa-solid fa-calendar-days"></i>May 16, 2026</span>
                 </div>
                 <div class="comment_text">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, saepe.
@@ -116,7 +116,7 @@
         </div>
 
         <div class="comment_form">
-            <h3 class="coment_title">Leave a comment</h3>
+            <h3 class="comment_title">Leave a comment</h3>
 
             <form action="#" method="POST">
                 <div class="form_name">
