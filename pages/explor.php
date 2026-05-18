@@ -48,6 +48,7 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         <main class="explore_page">
 
             <section class="explore_head">
+
                 <span class="explore_label">
                     <i class="fa-solid fa-compass"></i>
                     Explore Tangier
@@ -58,15 +59,18 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <p>
                     Explore the best places, beaches, food spots, culture, and hidden vibes around Tangier.
                 </p>
+
             </section>
 
             <section class="explore_filters">
+                
                 <button class="active">All</button>
                 <button>Beach</button>
                 <button>Food</button>
                 <button>Culture</button>
                 <button>Nature</button>
                 <button>City</button>
+
             </section>
 
             <section class="grid_place">
