@@ -7,6 +7,8 @@
 
 <?php
 
+session_start();
+
 require '../config/connection.php';
 
 if (!isset($_GET['id']) || empty($_GET['id'])) {
@@ -17,11 +19,11 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 $post_id = $_GET['id'];
 
 $stmt = $conn->prepare("
-    SELECT posts.*, categories.cat_name, users.user_name
-    FROM posts
-    INNER JOIN categories ON posts.category_id = categories.id_category
-    LEFT JOIN users ON posts.user_id = users.id_user
-    WHERE posts.id_post = ? AND posts.status = 'published'
+    select posts.*, categories.cat_name, users.user_name
+    from posts
+    inner join categories on posts.category_id = categories.id_category
+    left join users on posts.user_id = users.id_user
+    where posts.id_post = ? and posts.status = 'published'
 ");
 
 $stmt->execute([$post_id]);

@@ -1,7 +1,7 @@
 .explore_page {
-    width: min(1180px, calc(100% - 32px));
     max-width: 1200px;
-    margin: 48px auto;
+    margin: 90px auto 48px;
+    padding: 0 32px;
 }
 
 .explore_head {
@@ -196,8 +196,8 @@
 
 @media (max-width: 650px) {
     .explore_page {
-        width: min(100% - 24px, 1180px);
-        margin: 30px auto;
+        padding: 0 16px;
+        margin: 90px auto 30px;
     }
 
     .explore_head h1 {
