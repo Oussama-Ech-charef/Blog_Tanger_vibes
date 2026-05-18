@@ -44,7 +44,7 @@
                             <?php if (isset($_SESSION['id_user'])): ?>
 
                             <div class="dashboard_logout">
-                                <a href="#" class="dashboard">Dashboard</a>
+                                <a href="../pages/dashboard.php" class="dashboard">Dashboard</a>
                                 <a href="../pages/logout.php" class="logout">Logout</a>
                             </div>
                             <?php else: ?>
@@ -104,7 +104,7 @@
                             <?php if (isset($_SESSION['id_user'])): ?>
 
                             <div class="dashboard_logout">
-                                <a href="#" class="dashboard">Dashboard</a>
+                                <a href="../pages/dashboard.php" class="dashboard">Dashboard</a>
                                 <a href="../pages/logout.php" class="logout">Logout</a>
                             </div>
                             <?php else: ?>
