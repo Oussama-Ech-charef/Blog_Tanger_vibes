@@ -23,10 +23,10 @@
 }
 
 body {
-    
     font-family: var(--font_main);
     background-color: var(--bg_color);
     color: var(--color_dark);
+    padding-top: 60px;
 }
 
 a {

@@ -6,9 +6,10 @@
     border-bottom: 1px solid var(--border_light);
     position: fixed;
     top: 0;
+    left: 0;
+    right: 0;
     width: 100%;
-        z-index: 1000;
-
+    z-index: 1000;
 }
 
 
@@ -17,10 +18,11 @@
     margin: 0 auto;
     padding: 0 32px;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between;
     gap: 32px;
-    height: 60px;
+    min-height: 60px;
 }
 
 /* logo  */
