@@ -1,5 +1,69 @@
 
 
+<?php 
+
+session_start();
+
+require  '../config/connection.php';
+
+if (!isset($_SESSION['id_user'])) {
+    header("Location: login.php");
+    exit();
+
+}
+
+
+
+$id_user = $_SESSION['id_user'];
+
+$user_name = $_SESSION['user_name'];
+$role = $_SESSION['role'];
+
+
+
+if ($role === 'admin') {
+    $stmt = $conn->prepare("
+        select posts.*, categories.cat_name, users.user_name
+        from posts
+        inner join categories on posts.category_id = categories.id_category
+        left join users on posts.user_id = users.id_user
+        order by posts.created_at desc
+    ");
+    $stmt->execute();
+}else {
+    $stmt = $conn->prepare("
+        select posts.*, categories.cat_name
+        from posts
+        inner join categories on posts.category_id = categories.id_category
+        where posts.user_id = ?
+        order by posts.created_at desc
+    ");
+    $stmt->execute([$id_user]);
+}
+
+$posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+
+$total_posts = count($posts);
+
+$pending_posts = 0;
+$published_posts = 0;
+
+
+
+foreach ($posts as $post) {
+    if ($post['status'] === 'pending') {
+        $pending_posts++;
+    }
+
+    if ($post['status'] === 'published') {
+        $published_posts++;
+    }
+}
+
+
+?>
+
 
 
 <!DOCTYPE html>
@@ -28,7 +92,7 @@
                 Dashboard
             </span>
 
-            <h1>Welcome, oussama</h1>
+            <h1>Welcome, <?= htmlspecialchars($user_name) ?></h1>
 
             <p>
                 Manage your posts and track their publishing status.
@@ -44,17 +108,17 @@
     <section class="stats_grid">
         <div class="stat_card">
             <span>Total Posts</span>
-            <strong>13</strong>
+            <strong><?= $total_posts; ?></strong>
         </div>
 
         <div class="stat_card">
             <span>Published</span>
-            <strong>10</strong>
+            <strong><?= $published_posts; ?></strong>
         </div>
 
         <div class="stat_card">
             <span>Pending</span>
-            <strong>1</strong>
+            <strong><?= $pending_posts; ?></strong>
         </div>
     </section>
 
@@ -63,7 +127,7 @@
             <h2>Posts</h2>
         </div>
 
-        
+        <?php if (!empty($posts)): ?>
             <div class="table_wrap">
                 <table>
                     <thead>
@@ -71,9 +135,9 @@
                             <th>Title</th>
                             <th>Category</th>
 
-                            
+                            <?php if ($role === 'admin'): ?>
                                 <th>Author</th>
-                           
+                           <?php endif; ?>
 
                             <th>Status</th>
                             <th>Date</th>
@@ -82,36 +146,36 @@
                     </thead>
 
                     <tbody>
-                       
+                       <?php foreach ($posts as $post): ?>
                             <tr>
-                                <td>test</td>
-                                <td>cate_name</td>
+                                <td><?= htmlspecialchars($post['title']); ?></td>
+                                <td><?= htmlspecialchars($post['cat_name']); ?></td>
 
-                                
-                                    <td>oussama</td>
-                             
+                                <?php if ($role === 'admin'): ?>
+                                    <td><?= htmlspecialchars($post['user_name'] ?? 'admin'); ?></td>
+                                <?php endif; ?>
 
                                 <td>
-                                    <span class="status">
-                                        published
+                                    <span class="status <?= htmlspecialchars($post['status']); ?>">
+                                        <?= htmlspecialchars($post['status']); ?>
                                     </span>
                                 </td>
 
-                                <td>2026</td>
+                                <td><?= date('M d, Y', strtotime($post['created_at'])); ?></td>
 
                                 <td>
-                                    <a href="detail.php" class="table_link">
+                                    <a href="detail.php?id=<?= $post['id_post']; ?>" class="table_link">
                                         View
                                     </a>
                                 </td>
                             </tr>
-                       
+                       <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
-       
+       <?php else: ?>
             <p class="empty_text">No posts yet.</p>
-        
+        <?php endif; ?>
     </section>
 
 </main>
