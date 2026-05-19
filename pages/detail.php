@@ -104,24 +104,7 @@ if (!$post) {
         </div>
 
         <div class="comments_list">
-            <div class="comment_item">
-                <div class="comment_header">
-                    <span class="comment_name"><i class="fa-solid fa-circle-user"></i>Oussama</span>
-                    <span class="comment_date"><i class="fa-solid fa-calendar-days"></i>May 16, 2026</span>
-                </div>
-                <div class="comment_text">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, saepe.
-                </div>
-            </div>
-            <div class="comment_item">
-                <div class="comment_header">
-                    <span class="comment_name"><i class="fa-solid fa-circle-user"></i>Oussama</span>
-                    <span class="comment_date"><i class="fa-solid fa-calendar-days"></i>May 16, 2026</span>
-                </div>
-                <div class="comment_text">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore, saepe.
-                </div>
-            </div>
+            
             <div class="comment_item">
                 <div class="comment_header">
                     <span class="comment_name"><i class="fa-solid fa-circle-user"></i>Oussama</span>

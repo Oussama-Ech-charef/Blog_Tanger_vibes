@@ -6,6 +6,7 @@
     height: 85vh;
     width: 100%;
     overflow: hidden;
+    margin-top: 40px;
 }
 
 .hero_section img {
