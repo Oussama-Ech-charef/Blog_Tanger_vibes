@@ -24,11 +24,28 @@ $categories = $cat_stmt->fetchAll(PDO::FETCH_ASSOC);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = trim($_POST['title']);
     $category_id = $_POST['category_id'];
-    $image = trim($_POST['image']);
     $content = trim($_POST['content']);
-    $map_link = trim($_POST['map_link']);
+    $map_link = trim($_POST['map_link'] ?? '');
+
+if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
+    $map_link = $matches[1];
+}
 
 
+    $image = null;
+
+    if (!empty($_FILES['image']['name'])) {
+        $upload_dir = "../assets/uploads/";
+
+        if (!is_dir($upload_dir)) {
+            mkdir($upload_dir, 0777, true);
+        }
+
+        $image_name = "post_" . time() . "_" . $_FILES['image']['name'];
+        $image = $upload_dir . $image_name;
+
+        move_uploaded_file($_FILES['image']['tmp_name'], $image);
+    }
 
     if (empty($title) || empty($category_id) || empty($content)) {
         $error = "Title, category and content are required.";
@@ -150,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <p class="error_message"><?= $error; ?></p>
        <?php endif; ?>
 
-        <form action="#" method="POST" class="post_form">
+        <form action="#" method="POST" class="post_form" enctype="multipart/form-data">
 
             <label for="title">Title</label>
             <input type="text" id="title" name="title" placeholder="Post title" required>
@@ -167,7 +184,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </select>
 
             <label for="image">Image path</label>
-            <input type="text" id="image" name="image" placeholder="../assets/images/home.jpg">
+            <input type="file" id="image" name="image" accept="image/*" >
 
             <label for="map_link">Map link</label>
             <input type="text" id="map_link" name="map_link" placeholder="Google Maps embed link">
