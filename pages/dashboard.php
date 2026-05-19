@@ -46,6 +46,7 @@ $total_posts = count($posts);
 
 $pending_posts = 0;
 $published_posts = 0;
+$rejected_posts  = 0;
 
 
 
@@ -56,6 +57,10 @@ foreach ($posts as $post) {
 
     if ($post['status'] === 'published') {
         $published_posts++;
+    }
+
+    if ($post['status'] === 'rejected') {
+        $rejected_posts++;
     }
 }
 
@@ -117,6 +122,11 @@ foreach ($posts as $post) {
         <div class="stat_card">
             <span>Pending</span>
             <strong><?= $pending_posts; ?></strong>
+        </div>
+
+        <div class="stat_card">
+            <span>Rejected</span>
+            <strong><?= $rejected_posts; ?></strong>
         </div>
     </section>
 
