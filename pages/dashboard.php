@@ -1,5 +1,3 @@
-
-
 <?php 
 
 session_start();
@@ -99,7 +97,7 @@ foreach ($posts as $post) {
             </p>
         </div>
 
-        <a href="#" class="add_post_btn">
+        <a href="add_post.php" class="add_post_btn">
             <i class="fa-solid fa-plus"></i>
             Add Post
         </a>

@@ -173,3 +173,73 @@ td {
         grid-template-columns: 1fr;
     }
 }
+
+
+
+
+
+
+
+
+/* add post  */
+
+
+
+
+.form_box {
+    padding: 22px;
+    border: 1px solid var(--color_border);
+    border-radius: 8px;
+    background: var(--bg_color);
+    box-shadow: var(--card_shadow);
+}
+
+.post_form {
+    display: grid;
+    gap: 12px;
+}
+
+.post_form label {
+    color: var(--color_dark);
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.post_form input,
+.post_form select,
+.post_form textarea {
+    width: 100%;
+    border: 1px solid var(--color_border);
+    border-radius: 8px;
+    padding: 12px 14px;
+    color: var(--color_dark);
+    font: inherit;
+    outline: none;
+}
+
+.post_form textarea {
+    min-height: 180px;
+    resize: vertical;
+}
+
+.post_form input:focus,
+.post_form select:focus,
+.post_form textarea:focus {
+    border-color: var(--color_primary);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+}
+
+.post_form button {
+    justify-self: start;
+    border: 0;
+    cursor: pointer;
+}
+
+.error_message {
+    margin-bottom: 16px;
+    padding: 12px;
+    border-radius: 8px;
+    background: #fee2e2;
+    color: #b91c1c;
+    font-weight: 700;
+}
