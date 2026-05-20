@@ -1,23 +1,16 @@
-<?php 
-
+<?php
 session_start();
+require '../config/connection.php';
 
-require  '../config/connection.php';
 
 if (!isset($_SESSION['id_user'])) {
     header("Location: login.php");
     exit();
-
 }
 
-
-
 $id_user = $_SESSION['id_user'];
-
 $user_name = $_SESSION['user_name'];
 $role = $_SESSION['role'];
-
-
 
 if ($role === 'admin') {
     $stmt = $conn->prepare("
@@ -28,7 +21,7 @@ if ($role === 'admin') {
         order by posts.created_at desc
     ");
     $stmt->execute();
-}else {
+} else {
     $stmt = $conn->prepare("
         select posts.*, categories.cat_name
         from posts
@@ -41,33 +34,17 @@ if ($role === 'admin') {
 
 $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-
 $total_posts = count($posts);
-
 $pending_posts = 0;
 $published_posts = 0;
-$rejected_posts  = 0;
-
-
+$rejected_posts = 0;
 
 foreach ($posts as $post) {
-    if ($post['status'] === 'pending') {
-        $pending_posts++;
-    }
-
-    if ($post['status'] === 'published') {
-        $published_posts++;
-    }
-
-    if ($post['status'] === 'rejected') {
-        $rejected_posts++;
-    }
+    if ($post['status'] === 'pending') $pending_posts++;
+    if ($post['status'] === 'published') $published_posts++;
+    if ($post['status'] === 'rejected') $rejected_posts++;
 }
-
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -75,9 +52,7 @@ foreach ($posts as $post) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Tangier Vibes</title>
-
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="../assets/css/header.css">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
@@ -87,19 +62,14 @@ foreach ($posts as $post) {
 <?php require '../includes/header.php'; ?>
 
 <main class="dashboard_page">
-
     <section class="dashboard_head">
         <div>
             <span class="dashboard_label">
                 <i class="fa-solid fa-gauge"></i>
                 Dashboard
             </span>
-
-            <h1>Welcome, <?= htmlspecialchars($user_name) ?></h1>
-
-            <p>
-                Manage your posts and track their publishing status.
-            </p>
+            <h1>Welcome, <?= htmlspecialchars($user_name); ?></h1>
+            <p>Manage your posts and track their publishing status.</p>
         </div>
 
         <a href="add_post.php" class="add_post_btn">
@@ -145,18 +115,18 @@ foreach ($posts as $post) {
 
                             <?php if ($role === 'admin'): ?>
                                 <th>Author</th>
-                           <?php endif; ?>
+                            <?php endif; ?>
 
                             <th>Status</th>
-                            <th>Date</th>
+                            <th>Date <span class="date_format">(d/m/y)</span></th>
                             <th>Action</th>
                         </tr>
                     </thead>
 
                     <tbody>
-                       <?php foreach ($posts as $post): ?>
+                        <?php foreach ($posts as $post): ?>
                             <tr>
-                                <td><?= htmlspecialchars($post['title']); ?></td>
+                                <td class="title_cell"><?= htmlspecialchars($post['title']); ?></td>
                                 <td><?= htmlspecialchars($post['cat_name']); ?></td>
 
                                 <?php if ($role === 'admin'): ?>
@@ -169,23 +139,51 @@ foreach ($posts as $post) {
                                     </span>
                                 </td>
 
-                                <td><?= date('M d, Y', strtotime($post['created_at'])); ?></td>
+                                <td class="date_cell"><?= date('d/m/y', strtotime($post['created_at'])); ?></td>
 
                                 <td>
-                                    <a href="detail.php?id=<?= $post['id_post']; ?>" class="table_link">
-                                        View
-                                    </a>
+                                    <div class="table_actions">
+                                        <a href="detail.php?id=<?= $post['id_post']; ?>" class="action_btn view">
+                                            <i class="fa-solid fa-eye"></i>
+                                            <span>View</span>
+                                        </a>
+
+                                        <a href="edete.php?id=<?= $post['id_post']; ?>" class="action_btn edit">
+                                            <i class="fa-solid fa-pen"></i>
+                                            <span>Edit</span>
+                                        </a>
+
+                                        <?php if ($role === 'admin'): ?>
+                                            <?php if ($post['status'] !== 'published'): ?>
+                                                <a href="../includes/actions.php?action=approve&id=<?= $post['id_post']; ?>" class="action_btn approve">
+                                                    <i class="fa-solid fa-check"></i>
+                                                    <span>Approve</span>
+                                                </a>
+                                            <?php endif; ?>
+
+                                            <?php if ($post['status'] !== 'rejected'): ?>
+                                                <a href="../includes/actions.php?action=reject&id=<?= $post['id_post']; ?>" class="action_btn reject">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                    <span>Reject</span>
+                                                </a>
+                                            <?php endif; ?>
+                                        <?php endif; ?>
+
+                                        <a href="delet.php?id=<?= $post['id_post']; ?>" class="action_btn delete"  onclick="return confirm('Are you sure you want to delete this post?');">
+                                            <i class="fa-solid fa-trash"></i>
+                                            <span>Delete</span>
+                                        </a>
+                                    </div>
                                 </td>
                             </tr>
-                       <?php endforeach; ?>
+                        <?php endforeach; ?>
                     </tbody>
                 </table>
             </div>
-       <?php else: ?>
+        <?php else: ?>
             <p class="empty_text">No posts yet.</p>
         <?php endif; ?>
     </section>
-
 </main>
 
 <script src="../assets/js/main.js"></script>
