@@ -15,20 +15,14 @@ if (!isset($_GET['id'])) {
 
 $post_id = $_GET['id'];
 $id_user = $_SESSION['id_user'];
-$role = $_SESSION['role'];
 $error = "";
 
 $cat_stmt = $conn->prepare("select * from categories order by cat_name asc");
 $cat_stmt->execute();
 $categories = $cat_stmt->fetchAll(PDO::FETCH_ASSOC);
 
-if ($role === 'admin') {
-    $stmt = $conn->prepare("select * from posts where id_post = ?");
-    $stmt->execute([$post_id]);
-} else {
-    $stmt = $conn->prepare("select * from posts where id_post = ? and user_id = ?");
-    $stmt->execute([$post_id, $id_user]);
-}
+$stmt = $conn->prepare("select * from posts where id_post = ? and user_id = ?");
+$stmt->execute([$post_id, $id_user]);
 
 $post = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -64,46 +58,29 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($title) || empty($category_id) || empty($content)) {
         $error = "Title, category and content are required.";
     } else {
-            if ($role === 'admin') {
-            $stmt = $conn->prepare("
-                update posts
-                set category_id = :category_id,
-                    title = :title,
-                    image = :image,
-                    content = :content,
-                    map_link = :map_link
-                where id_post = :post_id
-            ");
+        $stmt = $conn->prepare("
+            update posts
+            set category_id = :category_id,
+                title = :title,
+                image = :image,
+                content = :content,
+                map_link = :map_link,
+                status = 'pending',
+                approved_by = null,
+                approved_at = null,
+                rejection_reason = null
+            where id_post = :post_id and user_id = :user_id
+        ");
 
-            $stmt->execute([
-                ':category_id' => $category_id,
-                ':title' => $title,
-                ':image' => $image,
-                ':content' => $content,
-                ':map_link' => $map_link,
-                ':post_id' => $post_id
-            ]);
-        } else {
-            $stmt = $conn->prepare("
-                update posts
-                set category_id = :category_id,
-                    title = :title,
-                    image = :image,
-                    content = :content,
-                    map_link = :map_link
-                where id_post = :post_id and user_id = :user_id
-            ");
-
-            $stmt->execute([
-                ':category_id' => $category_id,
-                ':title' => $title,
-                ':image' => $image,
-                ':content' => $content,
-                ':map_link' => $map_link,
-                ':post_id' => $post_id,
-                ':user_id' => $id_user
-            ]);
-        }
+        $stmt->execute([
+            ':category_id' => $category_id,
+            ':title' => $title,
+            ':image' => $image,
+            ':content' => $content,
+            ':map_link' => $map_link,
+            ':post_id' => $post_id,
+            ':user_id' => $id_user
+        ]);
 
         header("Location: dashboard.php");
         exit();

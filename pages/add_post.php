@@ -32,24 +32,27 @@ if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
 }
 
 
+    if (empty($title) || empty($category_id) || empty($content)) {
+        $error = "Title, category and content are required.";
+    }
+
     $image = null;
 
-    if (!empty($_FILES['image']['name'])) {
+    if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
         $upload_dir = "../assets/uploads/";
 
         if (!is_dir($upload_dir)) {
             mkdir($upload_dir, 0777, true);
         }
 
-        $image_name = "post_" . time() . "_" . $_FILES['image']['name'];
+        $file_extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
+        $image_name = "post_" . time() . "." . $file_extension;
         $image = $upload_dir . $image_name;
 
         move_uploaded_file($_FILES['image']['tmp_name'], $image);
     }
 
-    if (empty($title) || empty($category_id) || empty($content)) {
-        $error = "Title, category and content are required.";
-    } else {
+    if (empty($error)) {
         $slug = strtolower($title);
         $slug = preg_replace('/[^a-z0-9]+/', '-', $slug);
         $slug = trim($slug, '-');
@@ -167,7 +170,7 @@ if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
             <p class="error_message"><?= $error; ?></p>
        <?php endif; ?>
 
-        <form action="#" method="POST" class="post_form" enctype="multipart/form-data">
+        <form action="add_post.php" method="POST" class="post_form" enctype="multipart/form-data">
 
             <label for="title">Title</label>
             <input type="text" id="title" name="title" placeholder="Post title" required>
@@ -183,7 +186,7 @@ if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
              <?php endforeach; ?>
             </select>
 
-            <label for="image">Image path</label>
+            <label for="image">Image</label>
             <input type="file" id="image" name="image" accept="image/*" >
 
             <label for="map_link">Map link</label>
