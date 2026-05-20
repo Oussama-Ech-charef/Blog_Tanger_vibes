@@ -34,6 +34,7 @@ create table if not exists posts (
     content text not null,
     map_link varchar(1000),
     status enum('pending', 'published', 'rejected') default 'pending',
+    rejection_reason text null,
     approved_at timestamp null,
     created_at timestamp default current_timestamp,
     updated_at timestamp default current_timestamp on update current_timestamp,

@@ -148,12 +148,14 @@ foreach ($posts as $post) {
                                             <span>View</span>
                                         </a>
 
-                                        <a href="edete.php?id=<?= $post['id_post']; ?>" class="action_btn edit">
-                                            <i class="fa-solid fa-pen"></i>
-                                            <span>Edit</span>
-                                        </a>
+                                        <?php if ($post['user_id'] == $id_user): ?>
+                                            <a href="edete.php?id=<?= $post['id_post']; ?>" class="action_btn edit">
+                                                <i class="fa-solid fa-pen"></i>
+                                                <span>Edit</span>
+                                            </a>
+                                        <?php endif; ?>
 
-                                        <?php if ($role === 'admin'): ?>
+                                        <?php if ($role === 'admin' && $post['user_id'] != $id_user): ?>
                                             <?php if ($post['status'] !== 'published'): ?>
                                                 <a href="../includes/actions.php?action=approve&id=<?= $post['id_post']; ?>" class="action_btn approve">
                                                     <i class="fa-solid fa-check"></i>
@@ -162,11 +164,18 @@ foreach ($posts as $post) {
                                             <?php endif; ?>
 
                                             <?php if ($post['status'] !== 'rejected'): ?>
-                                                <a href="../includes/actions.php?action=reject&id=<?= $post['id_post']; ?>" class="action_btn reject">
+                                                <a href="reject.php?id=<?= $post['id_post']; ?>" class="action_btn reject">
                                                     <i class="fa-solid fa-xmark"></i>
                                                     <span>Reject</span>
                                                 </a>
                                             <?php endif; ?>
+                                        <?php endif; ?>
+
+                                        <?php if ($role !== 'admin' && $post['status'] === 'rejected' && !empty($post['rejection_reason'])): ?>
+                                            <a href="#reject_reason_<?= $post['id_post']; ?>" class="action_btn reason">
+                                                <i class="fa-solid fa-circle-info"></i>
+                                                <span>Reason</span>
+                                            </a>
                                         <?php endif; ?>
 
                                         <a href="delet.php?id=<?= $post['id_post']; ?>" class="action_btn delete"  onclick="return confirm('Are you sure you want to delete this post?');">
@@ -174,6 +183,27 @@ foreach ($posts as $post) {
                                             <span>Delete</span>
                                         </a>
                                     </div>
+
+                                    <?php if ($role !== 'admin' && $post['status'] === 'rejected' && !empty($post['rejection_reason'])): ?>
+                                        <div id="reject_reason_<?= $post['id_post']; ?>" class="reason_modal">
+                                            <div class="reason_card">
+                                                <div class="reason_head">
+                                                    <span>
+                                                        <i class="fa-solid fa-ban"></i>
+                                                        Rejection Reason
+                                                    </span>
+
+                                                    <a href="#" class="reason_close" aria-label="Close">
+                                                        <i class="fa-solid fa-xmark"></i>
+                                                    </a>
+                                                </div>
+
+                                                <h3><?= htmlspecialchars($post['title']); ?></h3>
+
+                                                <p><?= nl2br(htmlspecialchars($post['rejection_reason'])); ?></p>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

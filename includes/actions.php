@@ -27,18 +27,8 @@ if ($action === 'approve') {
         update posts
         set status = 'published',
             approved_by = ?,
-            approved_at = now()
-        where id_post = ?
-    ");
-    $stmt->execute([$id_user, $post_id]);
-}
-
-if ($action === 'reject') {
-    $stmt = $conn->prepare("
-        update posts
-        set status = 'rejected',
-            approved_by = ?,
-            approved_at = now()
+            approved_at = now(),
+            rejection_reason = null
         where id_post = ?
     ");
     $stmt->execute([$id_user, $post_id]);

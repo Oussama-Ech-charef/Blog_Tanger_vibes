@@ -10,19 +10,28 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 }
 
 $post_id = $_GET['id'];
+$id_user = $_SESSION['id_user'] ?? null;
+$role = $_SESSION['role'] ?? null;
 
 $stmt = $conn->prepare("
     select posts.*, categories.cat_name, users.user_name
     from posts
     inner join categories on posts.category_id = categories.id_category
     left join users on posts.user_id = users.id_user
-    where posts.id_post = ? and posts.status = 'published'
+    where posts.id_post = ?
 ");
 
 $stmt->execute([$post_id]);
 $post = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$post) {
+    header('Location: index.php');
+    exit;
+}
+
+$can_view_unpublished = $role === 'admin' || ($id_user !== null && $post['user_id'] == $id_user);
+
+if ($post['status'] !== 'published' && !$can_view_unpublished) {
     header('Location: index.php');
     exit;
 }
@@ -62,7 +71,15 @@ if (!$post) {
         <div class="icons">
             <span><i class="fa-solid fa-calendar-days"></i><?= date('M d, Y', strtotime($post['created_at'])); ?></span>
             <span><i class="fa-solid fa-circle-user"></i>By <?= htmlspecialchars($post['user_name'] ?? 'Admin'); ?></span>
+            <span><i class="fa-solid fa-circle-info"></i><?= htmlspecialchars($post['status']); ?></span>
         </div>
+
+        <?php if ($post['status'] === 'rejected' && !empty($post['rejection_reason'])): ?>
+            <div class="social">
+                <i class="fa-solid fa-ban"></i> Rejection reason:
+                <?= htmlspecialchars($post['rejection_reason']); ?>
+            </div>
+        <?php endif; ?>
 
         <img src="<?= htmlspecialchars($post['image']); ?>" width="400px" alt="<?= htmlspecialchars($post['title']); ?>">
 
@@ -73,7 +90,10 @@ if (!$post) {
 
         <div class="tags">
             <span><i class="fa-solid fa-hashtag"></i>Tangier</span>
-            <span><i class="fa-solid fa-hashtag"></i><?= htmlspecialchars($post['cat_name']); ?></span>
+            <span><i class="fa-solid fa-hashtag"></i>Nightlife</span>
+            <span><i class="fa-solid fa-hashtag"></i>Beaches</span>
+            <span><i class="fa-solid fa-hashtag"></i>Food</span>
+            <span><i class="fa-solid fa-hashtag"></i>Culture</span>
         </div>
 
 
