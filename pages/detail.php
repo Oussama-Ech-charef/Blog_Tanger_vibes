@@ -71,7 +71,7 @@ if ($post['status'] !== 'published' && !$can_view_unpublished) {
         <div class="icons">
             <span><i class="fa-solid fa-calendar-days"></i><?= date('M d, Y', strtotime($post['created_at'])); ?></span>
             <span><i class="fa-solid fa-circle-user"></i>By <?= htmlspecialchars($post['user_name'] ?? 'Admin'); ?></span>
-            <span><i class="fa-solid fa-circle-info"></i><?= htmlspecialchars($post['status']); ?></span>
+            
         </div>
 
         <?php if ($post['status'] === 'rejected' && !empty($post['rejection_reason'])): ?>
