@@ -76,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="../assets/css/header.css">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/reject.css">
 </head>
 <body>
 
@@ -99,12 +100,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </a>
     </section>
 
-    <section class="form_box">
+    <section class="reject_box">
         <?php if (!empty($error)): ?>
             <p class="error_message"><?= htmlspecialchars($error); ?></p>
         <?php endif; ?>
 
-        <form action="#" method="POST" class="post_form">
+        <form action="#" method="POST" class="reject_form">
             <label for="rejection_reason">Rejection reason</label>
             <textarea id="rejection_reason" name="rejection_reason" placeholder="Explain what needs to be changed..." required><?= htmlspecialchars($post['rejection_reason'] ?? ''); ?></textarea>
 
