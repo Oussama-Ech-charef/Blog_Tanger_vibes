@@ -126,11 +126,19 @@ foreach ($posts as $post) {
                     <tbody>
                         <?php foreach ($posts as $post): ?>
                             <tr>
-                                <td class="title_cell"><?= htmlspecialchars($post['title']); ?></td>
-                                <td><?= htmlspecialchars($post['cat_name']); ?></td>
+                                <td>
+                                    <span class="title_cell">
+                                        <?= htmlspecialchars($post['title']); ?>
+                                    </span>
+                                </td>
+                                <td>
+                                    <?= htmlspecialchars($post['cat_name']); ?>
+                                </td>
 
                                 <?php if ($role === 'admin'): ?>
-                                    <td><?= htmlspecialchars($post['user_name'] ?? 'admin'); ?></td>
+                                    <td>
+                                        <?= htmlspecialchars($post['user_name'] ?? 'admin'); ?>
+                                    </td>
                                 <?php endif; ?>
 
                                 <td>
@@ -143,7 +151,7 @@ foreach ($posts as $post) {
 
                                 <td>
                                     <div class="table_actions">
-                                        <a href="detail.php?id=<?= $post['id_post']; ?>" class="action_btn view">
+                                        <a href="#view_post_<?= $post['id_post']; ?>" class="action_btn view">
                                             <i class="fa-solid fa-eye"></i>
                                             <span>View</span>
                                         </a>
@@ -182,6 +190,40 @@ foreach ($posts as $post) {
                                             <i class="fa-solid fa-trash"></i>
                                             <span>Delete</span>
                                         </a>
+                                    </div>
+
+
+                                    <div id="view_post_<?= $post['id_post']; ?>" class="view_modal">
+                                        <div class="view_card">
+
+                                            <div class="view_head">
+                                                <h3>Post details</h3>
+
+                                                <a href="#" class="view_close">
+                                                    <i class="fa-solid fa-xmark"></i>
+                                                </a>
+                                            </div>
+
+                                            <?php if (!empty($post['image'])): ?>
+                                                <img src="<?= htmlspecialchars($post['image']); ?>" alt="<?= htmlspecialchars($post['title']); ?>">
+                                            <?php endif; ?>
+
+                                            <div class="view_info">
+                                                <p>
+                                                    <strong>Title</strong>
+                                                    <?= htmlspecialchars($post['title']); ?>
+                                                </p>
+                                            </div>
+
+                                            <div class="view_content">
+                                                <strong>Content</strong>
+
+                                                <p>
+                                                    <?= nl2br(htmlspecialchars($post['content'])); ?>
+                                                </p>
+                                            </div>
+
+                                        </div>
                                     </div>
 
                                     <?php if ($role !== 'admin' && $post['status'] === 'rejected' && !empty($post['rejection_reason'])): ?>

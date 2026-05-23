@@ -144,12 +144,13 @@ tbody tr:last-child td {
 }
 
 .title_cell {
-    min-width: 260px;
-    max-width: 340px;
-    white-space: normal;
-    line-height: 1.35;
-    overflow-wrap: normal;
-    word-break: normal;
+    display: -webkit-box;
+    max-width: 260px;
+    line-height: 1.5;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 .date_format {
@@ -334,65 +335,109 @@ tbody tr:last-child td {
     color: var(--color_gray);
 }
 
-/* add post / edit post */
 
-.form_box {
-    padding: 22px;
-    border: 1px solid var(--color_border);
-    border-radius: 8px;
-    background: var(--bg_color);
-    box-shadow: var(--card_shadow);
+/* card view  */
+
+.view_modal {
+    position: fixed;
+    inset: 0;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(15, 23, 42, 0.55);
+    z-index: 1000;
 }
 
-.post_form {
-    display: grid;
-    gap: 12px;
+.view_modal:target {
+    display: flex;
 }
 
-.post_form label {
-    color: var(--color_dark);
-    font-size: 14px;
-    font-weight: 700;
-}
-
-.post_form input,
-.post_form select,
-.post_form textarea {
+.view_card {
     width: 100%;
+    max-width: 700px;
+    max-height: 88vh;
+    overflow-y: auto;
+    padding: 22px;
+    border-radius: 8px;
+    background: #fff;
+    box-shadow: 0 20px 60px rgba(15, 23, 42, 0.25);
+}
+
+.view_head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+}
+
+.view_head h3 {
+    color: var(--color_dark);
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.view_close {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    border-radius: 50%;
+    color: var(--color_gray);
+    font-size: 18px;
+}
+
+.view_close:hover {
+    background: var(--color_light);
+    color: var(--color_dark);
+}
+
+.view_card img {
+    width: 100%;
+    height: 320px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 18px;
+}
+
+.view_info {
+    margin-bottom: 16px;
+}
+
+.view_info p {
+    padding: 14px 16px;
     border: 1px solid var(--color_border);
     border-radius: 8px;
-    padding: 12px 14px;
+    background: var(--color_light);
     color: var(--color_dark);
-    font: inherit;
-    outline: none;
+    font-size: 15px;
+    line-height: 1.5;
 }
 
-.post_form textarea {
-    min-height: 180px;
-    resize: vertical;
+.view_info strong,
+.view_content strong {
+    display: block;
+    margin-bottom: 6px;
+    color: var(--color_gray);
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
 }
 
-.post_form input:focus,
-.post_form select:focus,
-.post_form textarea:focus {
-    border-color: var(--color_primary);
-    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
-}
-
-.post_form button {
-    justify-self: start;
-    border: 0;
-    cursor: pointer;
-}
-
-.error_message {
-    margin-bottom: 16px;
-    padding: 12px;
+.view_content {
+    padding: 16px;
+    border: 1px solid var(--color_border);
     border-radius: 8px;
-    background: #fee2e2;
-    color: #b91c1c;
-    font-weight: 700;
+    background: #fff;
 }
+
+.view_content p {
+    color: var(--color_dark);
+    line-height: 1.7;
+    font-size: 15px;
+}
+
 
 @media (max-width: 700px) {
     .dashboard_page {
@@ -436,6 +481,19 @@ tbody tr:last-child td {
         min-height: 32px;
         padding: 7px 9px;
         font-size: 11px;
+    }
+
+
+     .view_card {
+        padding: 16px;
+    }
+
+    .view_card img {
+        height: 220px;
+    }
+
+    .view_head h3 {
+        font-size: 20px;
     }
 }
 
