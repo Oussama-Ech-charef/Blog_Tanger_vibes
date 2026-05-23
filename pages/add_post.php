@@ -26,6 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category_id = $_POST['category_id'];
     $content = trim($_POST['content']);
     $map_link = trim($_POST['map_link'] ?? '');
+    $publish_option = $_POST['publish_option'] ?? 'publish';
 
 if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
     $map_link = $matches[1];
@@ -38,37 +39,39 @@ if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
 
     $image = null;
 
-    if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
+    if (!empty($_FILES['image']['name'])) {
         $upload_dir = "../assets/uploads/";
 
         if (!is_dir($upload_dir)) {
             mkdir($upload_dir, 0777, true);
         }
 
-        $file_extension = pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION);
-        $image_name = "post_" . time() . "." . $file_extension;
+        $image_name = "post_" . time() . "_" . $_FILES['image']['name'];
         $image = $upload_dir . $image_name;
 
         move_uploaded_file($_FILES['image']['tmp_name'], $image);
     }
 
+
     if (empty($error)) {
-        $slug = strtolower($title);
-        $slug = preg_replace('/[^a-z0-9]+/', '-', $slug);
-        $slug = trim($slug, '-');
-        $slug = $slug . '-' . time();
+        
 
 
-        if ($role === 'admin') {
-            $status = 'published';
-            $approved_by = $id_user;
-            $approved_at = date('Y-m-d H:i:s');
-        }else  {
-            $status = 'pending';
+        if ($publish_option === 'draft') {
+            $status = 'draft';
             $approved_by = null;
             $approved_at = null;
+        } else {
+            if ($role === 'admin') {
+                $status = 'published';
+                $approved_by = $id_user;
+                $approved_at = date('Y-m-d H:i:s');
+            } else {
+                $status = 'pending';
+                $approved_by = null;
+                $approved_at = null;
+            }
         }
-
 
 
         $stmt = $conn->prepare("
@@ -77,7 +80,7 @@ if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
                 user_id,
                 approved_by,
                 title,
-                slug,
+                
                 image,
                 content,
                 map_link,
@@ -88,7 +91,7 @@ if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
                 :user_id,
                 :approved_by,
                 :title,
-                :slug,
+                
                 :image,
                 :content,
                 :map_link,
@@ -102,7 +105,7 @@ if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
             ':user_id' => $id_user,
             ':approved_by' => $approved_by,
             ':title' => $title,
-            ':slug' => $slug,
+            
             ':image' => $image,
             ':content' => $content,
             ':map_link' => $map_link,
@@ -137,6 +140,7 @@ if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="../assets/css/header.css">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/add_post.css">
 </head>
 <body>
 
@@ -166,41 +170,59 @@ if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
 
     <section class="form_box">
 
-        <?php if (!empty($error)): ?>
-            <p class="error_message"><?= $error; ?></p>
-       <?php endif; ?>
+                <?php if (!empty($error)): ?>
+                    <p class="error_message"><?= $error; ?></p>
+                <?php endif; ?>
 
-        <form action="add_post.php" method="POST" class="post_form" enctype="multipart/form-data">
+                <form action="add_post.php" method="POST" class="post_form" enctype="multipart/form-data">
 
-            <label for="title">Title</label>
-            <input type="text" id="title" name="title" placeholder="Post title" required>
+                    <label for="title">Title</label>
+                    <input type="text" id="title" name="title" placeholder="Post title" required>
 
-            <label for="category_id">Category</label>
-            <select id="category_id" name="category_id" required>
-                <option value="">Choose category</option>
+                    <div class="form_row">
+                        <div class="form_group">
+                            <label for="category_id">Category</label>
+                            <select id="category_id" name="category_id" required>
+                                <option value="">Choose category</option>
 
-              <?php foreach ($categories as $category): ?>
-                    <option value="<?= $category['id_category']; ?>">
-                      <?= htmlspecialchars($category['cat_name']); ?>
-                    </option>
-             <?php endforeach; ?>
-            </select>
+                                <?php foreach ($categories as $category): ?>
+                                    <option value="<?= $category['id_category']; ?>">
+                                        <?= htmlspecialchars($category['cat_name']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
 
-            <label for="image">Image</label>
-            <input type="file" id="image" name="image" accept="image/*" >
+                        <div class="form_group">
+                            <label for="publish_option">Publish option</label>
+                            <select id="publish_option" name="publish_option">
+                                <option value="publish">Publish now</option>
+                                <option value="draft">Save as draft</option>
+                            </select>
+                        </div>
+                    </div>
 
-            <label for="map_link">Map link</label>
-            <input type="text" id="map_link" name="map_link" placeholder="Google Maps embed link">
+                    <div class="form_row">
+                        <div class="form_group">
+                            <label for="image">Image</label>
+                            <input type="file" id="image" name="image" accept="image/*">
+                        </div>
 
-            <label for="content">Content</label>
-            <textarea id="content" name="content" placeholder="Write post content..." required></textarea>
+                        <div class="form_group">
+                            <label for="map_link">Map link</label>
+                            <input type="text" id="map_link" name="map_link" placeholder="Google Maps embed link">
+                        </div>
+                    </div>
 
-            <button type="submit" class="add_post_btn">
-                <i class="fa-solid fa-paper-plane"></i>
-                Publish
-            </button>
+                    <label for="content">Content</label>
+                    <textarea id="content" name="content" placeholder="Write post content..." required></textarea>
 
-        </form>
+                    <button type="submit" class="add_post_btn">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        Publish
+                    </button>
+
+                </form>
     </section>
 
 </main>

@@ -29,11 +29,11 @@ create table if not exists posts (
     user_id int null,
     approved_by int null,
     title varchar(255) not null,
-    slug varchar(255) not null unique,
+   
     image varchar(255),
     content text not null,
     map_link varchar(1000),
-    status enum('pending', 'published', 'rejected') default 'pending',
+    status enum('draft','pending', 'published', 'rejected') default 'pending',
     rejection_reason text null,
     approved_at timestamp null,
     created_at timestamp default current_timestamp,

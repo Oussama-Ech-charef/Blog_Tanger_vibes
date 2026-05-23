@@ -15,6 +15,7 @@ if (!isset($_GET['id'])) {
 
 $post_id = $_GET['id'];
 $id_user = $_SESSION['id_user'];
+$role = $_SESSION['role'];
 $error = "";
 
 $cat_stmt = $conn->prepare("select * from categories order by cat_name asc");
@@ -36,6 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category_id = $_POST['category_id'];
     $content = trim($_POST['content']);
     $map_link = trim($_POST['map_link']);
+    $publish_option = $_POST['publish_option'] ?? 'publish';
     $image = $post['image'];
 
     if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
@@ -58,6 +60,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($title) || empty($category_id) || empty($content)) {
         $error = "Title, category and content are required.";
     } else {
+
+
+            if ($publish_option === 'draft') {
+            $status = 'draft';
+            $approved_by = null;
+            $approved_at = null;
+        } else {
+            if ($role === 'admin') {
+                $status = 'published';
+                $approved_by = $id_user;
+                $approved_at = date('Y-m-d H:i:s');
+            } else {
+                $status = 'pending';
+                $approved_by = null;
+                $approved_at = null;
+            }
+        }
+
+
         $stmt = $conn->prepare("
             update posts
             set category_id = :category_id,
@@ -65,9 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 image = :image,
                 content = :content,
                 map_link = :map_link,
-                status = 'pending',
-                approved_by = null,
-                approved_at = null,
+                status = :status,
+                approved_by = :approved_by,
+                approved_at = :approved_at,
                 rejection_reason = null
             where id_post = :post_id and user_id = :user_id
         ");
@@ -78,6 +99,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':image' => $image,
             ':content' => $content,
             ':map_link' => $map_link,
+            ':status' => $status,
+            ':approved_by' => $approved_by,
+            ':approved_at' => $approved_at,
             ':post_id' => $post_id,
             ':user_id' => $id_user
         ]);
@@ -98,6 +122,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <link rel="stylesheet" href="../assets/css/main.css">
     <link rel="stylesheet" href="../assets/css/header.css">
     <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/add_post.css">
 </head>
 <body>
 
@@ -122,43 +147,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </section>
 
     <section class="form_box">
-        <?php if (!empty($error)): ?>
-            <p class="error_message"><?= htmlspecialchars($error); ?></p>
-        <?php endif; ?>
 
-        <form action="#" method="POST" class="post_form" enctype="multipart/form-data">
-            <label for="title">Title</label>
-            <input type="text" id="title" name="title" value="<?= htmlspecialchars($post['title']); ?>" required>
-
-            <label for="category_id">Category</label>
-            <select id="category_id" name="category_id" required>
-                <option value="">Choose category</option>
-
-                <?php foreach ($categories as $category): ?>
-                    <option value="<?= $category['id_category']; ?>" <?= $category['id_category'] == $post['category_id'] ? 'selected' : ''; ?>>
-                        <?= htmlspecialchars($category['cat_name']); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-
-            <label for="image">Image</label>
-            <input type="file" id="image" name="image" accept="image/*">
-
-            <?php if (!empty($post['image'])): ?>
-                <p class="empty_text">Current image: <?= htmlspecialchars($post['image']); ?></p>
+            <?php if (!empty($error)): ?>
+                <p class="error_message"><?= $error; ?></p>
             <?php endif; ?>
 
-            <label for="map_link">Map link</label>
-            <input type="text" id="map_link" name="map_link" value="<?= htmlspecialchars($post['map_link']); ?>">
+            <form action="#" method="POST" class="post_form" enctype="multipart/form-data">
 
-            <label for="content">Content</label>
-            <textarea id="content" name="content" required><?= htmlspecialchars($post['content']); ?></textarea>
+                <label for="title">Title</label>
+                <input type="text" id="title" name="title" placeholder="Post title" value="<?= htmlspecialchars($post['title']); ?>"  required>
 
-            <button type="submit" class="add_post_btn">
-                <i class="fa-solid fa-floppy-disk"></i>
-                Save Changes
-            </button>
-        </form>
+                <div class="form_row">
+                    <div class="form_group">
+                        <label for="category_id">Category</label>
+                        <select id="category_id" name="category_id" required>
+                            <option value="">Choose category</option>
+
+                            <?php foreach ($categories as $category): ?>
+                                <option 
+                                    value="<?= $category['id_category']; ?>"
+                                    <?= $category['id_category'] == $post['category_id'] ? 'selected' : ''; ?>
+                                >
+                                    <?= htmlspecialchars($category['cat_name']); ?>
+                                </option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+
+                    <div class="form_group">
+                        <label for="publish_option">Publish option</label>
+                        <select id="publish_option" name="publish_option">
+                            <option value="publish">Publish now</option>
+                            <option value="draft" <?= $post['status'] === 'draft' ? 'selected' : ''; ?>>
+                                Save as draft
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form_row">
+                    <div class="form_group">
+                        <label for="image">Image</label>
+                        <input type="file" id="image" name="image" accept="image/*">
+
+                        <?php if (!empty($post['image'])): ?>
+                            <p class="current_file">
+                                Current image: <?= htmlspecialchars($post['image']); ?>
+                            </p>
+                        <?php endif; ?>
+                    </div>
+
+                    <div class="form_group">
+                        <label for="map_link">Map link</label>
+                        <input type="text" id="map_link" name="map_link" placeholder="Google Maps embed link" value="<?= htmlspecialchars($post['map_link'] ?? ''); ?>">
+                    </div>
+                </div>
+
+                <label for="content">Content</label>
+                <textarea id="content" name="content" placeholder="Write post content..." required><?= htmlspecialchars($post['content']); ?></textarea>
+
+                <button type="submit" class="add_post_btn">
+                    <i class="fa-solid fa-paper-plane"></i>
+                    Publish
+                </button>
+
+            </form>
     </section>
 </main>
 
