@@ -1,6 +1,6 @@
 
 
-/* desctop  */
+/* header */
 .site_header {
     background-color: var(--bg_color);
     border-bottom: 1px solid var(--border_light);
@@ -12,7 +12,7 @@
     z-index: 1000;
 }
 
-
+/* desktop nav */
 .header_nav_desctop {
     max-width: 1200px;
     margin: 0 auto;
@@ -47,7 +47,7 @@
 }
 
 
-/* navlinks desctop  */
+/* desktop links */
 
 
 
@@ -70,7 +70,7 @@
 
 
 
-/* search desctop  */
+/* desktop search */
 
 
 
@@ -109,7 +109,7 @@
 }
 
 
-/* login and registr and admin  */
+/* auth buttons */
 
 .auth_actions_desctop {
     display: flex;
@@ -207,7 +207,7 @@
 }
 
 
-/* mobile  */
+/* mobile menu */
 
 
 .header_nav_mobile {

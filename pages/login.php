@@ -9,6 +9,7 @@ require '../config/connection.php';
 
 $error = "";
 
+// success message from register
 $success = $_SESSION['success'] ?? "";
 
 
@@ -18,10 +19,12 @@ unset($_SESSION['success']);
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
+    // get form values
     $email = trim($_POST['email']);
     $password = $_POST['password'];
 
 
+    // validation
     if (empty($email) || empty($password)) {
 
         $error = "All fields are required.";
@@ -32,14 +35,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     } else {
 
+        // get user
         $stmt = $conn->prepare("select * from users where email = ?");
         $stmt->execute([$email]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
+        // check password
         if ($user && password_verify($password, $user['password'])) {
             session_regenerate_id(true);
 
+            // create session
             $_SESSION['id_user'] = $user['id_user'];
             $_SESSION['user_name'] = $user['user_name'];
             $_SESSION['role'] = $user['role'];
@@ -81,6 +87,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <main class="login_and_register">
 
+        <!-- login card -->
         <section class="card">
 
             <a href="index.php" class="logo">
@@ -92,6 +99,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <p>Welcome back to Tangier Vibes.</p>
 
+                    <!-- messages -->
                     <?php if (!empty($success)): ?>
                         <p class="success_message"><?= $success; ?></p>
                     <?php endif; ?>
@@ -102,6 +110,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <?php endif; ?>
 
 
+            <!-- login form -->
             <form action="#" method="POST">
                 <label for="email">Email</label>
                 <input type="email" id="email" name="email" placeholder="you@example.com" value="<?= htmlspecialchars($email ?? '') ?>" required>

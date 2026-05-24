@@ -3,11 +3,13 @@
 session_start();
 require '../config/connection.php';
 
+// check login
 if (!isset($_SESSION['id_user'])) {
     header("Location: login.php");
     exit();
 }
 
+// check post id
 if (!isset($_GET['id'])) {
     header("Location: dashboard.php");
     exit();
@@ -18,10 +20,12 @@ $id_user = $_SESSION['id_user'];
 $role = $_SESSION['role'];
 $error = "";
 
+// get categories
 $cat_stmt = $conn->prepare("select * from categories order by cat_name asc");
 $cat_stmt->execute();
 $categories = $cat_stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// get post
 $stmt = $conn->prepare("select * from posts where id_post = ? and user_id = ?");
 $stmt->execute([$post_id, $id_user]);
 
@@ -33,6 +37,7 @@ if (!$post) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // get form values
     $title = trim($_POST['title']);
     $category_id = $_POST['category_id'];
     $content = trim($_POST['content']);
@@ -40,10 +45,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $publish_option = $_POST['publish_option'] ?? 'publish';
     $image = $post['image'];
 
+    // get map src
     if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
         $map_link = $matches[1];
     }
 
+    // upload image
     if (!empty($_FILES['image']['name'])) {
         $upload_dir = "../assets/uploads/";
 
@@ -57,12 +64,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         move_uploaded_file($_FILES['image']['tmp_name'], $image);
     }
 
+    // validation
     if (empty($title) || empty($category_id) || empty($content)) {
         $error = "Title, category and content are required.";
     } else {
 
 
-            if ($publish_option === 'draft') {
+        // status
+        if ($publish_option === 'draft') {
             $status = 'draft';
             $approved_by = null;
             $approved_at = null;
@@ -79,6 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
 
+        // update post
         $stmt = $conn->prepare("
             update posts
             set category_id = :category_id,
@@ -129,6 +139,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php require '../includes/header.php'; ?>
 
 <main class="dashboard_page">
+    <!-- header -->
     <section class="dashboard_head">
         <div>
             <span class="dashboard_label">
@@ -146,6 +157,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </a>
     </section>
 
+    <!-- form -->
     <section class="form_box">
 
             <?php if (!empty($error)): ?>
@@ -154,9 +166,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <form action="#" method="POST" class="post_form" enctype="multipart/form-data">
 
+                <!-- title -->
                 <label for="title">Title</label>
                 <input type="text" id="title" name="title" placeholder="Post title" value="<?= htmlspecialchars($post['title']); ?>"  required>
 
+                <!-- category and status -->
                 <div class="form_row">
                     <div class="form_group">
                         <label for="category_id">Category</label>
@@ -185,6 +199,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
 
+                <!-- image and map -->
                 <div class="form_row">
                     <div class="form_group">
                         <label for="image">Image</label>
@@ -203,9 +218,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
 
+                <!-- content -->
                 <label for="content">Content</label>
                 <textarea id="content" name="content" placeholder="Write post content..." required><?= htmlspecialchars($post['content']); ?></textarea>
 
+                <!-- button -->
                 <button type="submit" class="add_post_btn">
                     <i class="fa-solid fa-paper-plane"></i>
                     Publish

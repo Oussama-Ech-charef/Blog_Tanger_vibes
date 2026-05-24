@@ -2,6 +2,7 @@
 session_start();
  require '../config/connection.php';
 
+ // get latest posts
  $stmt = $conn->prepare("
         select posts.*, categories.cat_name, users.user_name
         from posts
@@ -46,6 +47,7 @@ session_start();
 
 <?php require '../includes/header.php'; ?>
 
+        <!-- hero -->
         <section class="hero_section">
             <img src="../assets/images/home.jpg"  alt="Tanger Vibes" loading="lazy">
             <div class="hero_shadow"></div>
@@ -69,6 +71,7 @@ session_start();
         </section>
 
 
+        <!-- latest posts -->
         <section class="latest_section">
             <div class="section_header">
                 <h2 class="title">Latest Places</h2>
@@ -81,6 +84,7 @@ session_start();
                     <?php if (!empty($posts)): ?>
                         <?php foreach ($posts as $post): ?>
 
+                            <!-- post card -->
                             <a href="detail.php?id=<?= $post['id_post']; ?>" class="card_place">
 
                                 <img     src="<?= htmlspecialchars($post['image']); ?>"     alt="<?= htmlspecialchars($post['title']); ?>"     loading="lazy">

@@ -2,6 +2,7 @@
 session_start();
 require '../config/connection.php';
 
+// get published posts
 $stmt = $conn->prepare("
         select posts.*, categories.cat_name, users.user_name
         from posts
@@ -47,6 +48,7 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
         
         <main class="explore_page">
 
+            <!-- page header -->
             <section class="explore_head">
 
                 <span class="explore_label">
@@ -62,6 +64,7 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             </section>
 
+            <!-- filters -->
             <section class="explore_filters">
                 
                 <button class="active">All</button>
@@ -73,11 +76,13 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
             </section>
 
+            <!-- posts grid -->
             <section class="grid_place">
 
                 <?php if (!empty($posts)): ?>
                     <?php foreach ($posts as $post): ?>
 
+                        <!-- post card -->
                         <a href="detail.php?id=<?= $post['id_post']; ?>" class="card_place">
                             <img src="<?= htmlspecialchars($post['image']); ?>" alt="<?= htmlspecialchars($post['title']); ?>" loading="lazy">
 

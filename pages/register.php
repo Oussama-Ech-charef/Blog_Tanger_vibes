@@ -11,25 +11,27 @@ $error = "";
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // get form values
     $name = trim($_POST['name']);
     $email = trim($_POST['email']);
     $password = $_POST['password'];
 
 
 
+    // validation
     if (empty($name) || empty($email) || empty($password)) {
 
         $error = "All fields are required.";
 
 
-        // valide email 
+        // check email
 
 
     }elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 
         $error = "Invalid email format.";
 
-        // valide password 
+        // check password
 
     } elseif (strlen($password) < 6) {
 
@@ -39,7 +41,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
 
 
-        // valid email existing 
+        // check email exists
         $stmt = $conn->prepare("select id_user from users where email = ?");
 
         $stmt->execute([$email]);
@@ -50,10 +52,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $error = "Email already exists.";
                 
             } else {
-                // password hash 
+                // hash password
                     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-                    // add user 
+                    // add user
                     $stmt = $conn->prepare("
                             insert into users (user_name, email, password, role)
                             values (?, ?, ?, 'user')
@@ -102,6 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     <main class="login_and_register">
         
+        <!-- register card -->
         <section class="card">
 
             <a href="index.php" class="logo">
@@ -113,11 +116,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <p>Create your Tangier Vibes account.</p>
 
+                    <!-- error message -->
                     <?php if(!empty($error)): ?>
                         <p class="error_message"><?= $error; ?></p>
                     <?php endif; ?>
 
 
+            <!-- register form -->
             <form action="#" method="POST">
                 <label for="name">Full name</label>
                 <input type="text" id="name" name="name" placeholder="Your name" value="<?= htmlspecialchars($name ?? '') ?>" required>

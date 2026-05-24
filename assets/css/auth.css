@@ -1,3 +1,4 @@
+/* page */
 .login_and_register {
     min-height: 100vh;
     padding: 25px;
@@ -7,6 +8,7 @@
     background: var(--color_light);
 }
 
+/* card */
 .card {
     width: min(100%, 420px);
     padding: 32px;
@@ -16,6 +18,7 @@
     box-shadow: var(--detail_shadow);
 }
 
+/* logo */
 .logo {
     display: inline-flex;
     align-items: center;
@@ -46,6 +49,7 @@ p {
     line-height: 1.6;
 }
 
+/* messages */
 .error_message{
     background: #ffebee;
     color: #c62828;
@@ -66,6 +70,7 @@ p {
     font-weight: 600;
 }
 
+/* form */
 form {
     display: flex;
     flex-direction: column;
@@ -94,6 +99,7 @@ form input:focus {
     box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
 }
 
+/* options */
 .options {
     display: flex;
     align-items: center;
@@ -123,6 +129,7 @@ a {
     font-weight: 700;
 }
 
+/* button */
 .btn {
     height: 50px;
     border: none;
@@ -138,11 +145,13 @@ a {
     background: #1d4ed8;
 }
 
+/* switch link */
 .switch {
     margin: 22px 0 0;
     text-align: center;
 }
 
+/* mobile */
 @media (max-width: 520px) {
     .login_and_register {
         padding: 16px;

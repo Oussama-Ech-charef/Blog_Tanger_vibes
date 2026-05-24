@@ -1,5 +1,5 @@
 
-/* hero section  */
+/* hero */
 
 .hero_section {
     position: relative;
@@ -93,7 +93,7 @@
     transform: translateY(-2px);
 }
 
-/* last section  */
+/* latest posts */
 .latest_section {
     padding: 80px 40px;
     max-width: 1200px;
@@ -121,7 +121,7 @@
 
 
 
-/* grid card  */
+/* cards */
 
 .grid_place {
     display: grid;
@@ -258,6 +258,7 @@
     gap: 12px;
 }
 
+/* tablet */
 @media (max-width: 900px) {
     .hero_section {
         height: 50vh;
@@ -289,7 +290,7 @@
 }
 
 
-
+/* mobile */
 @media (max-width: 600px) {
        .hero_section {
         height: 70vh;

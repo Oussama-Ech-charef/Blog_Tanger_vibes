@@ -1,8 +1,10 @@
+/* page */
 .detail_container {
     width: min(900px, calc(100% - 32px));
     margin: 90px auto 48px;
 }
 
+/* category */
 .detail_category {
     display: inline-flex;
     align-items: center;
@@ -20,6 +22,7 @@
     color: var(--color_primary);
 }
 
+/* title */
 .detail_container h1 {
     max-width: 760px;
     margin-bottom: 16px;
@@ -29,6 +32,7 @@
     font-weight: 800;
 }
 
+/* info */
 .icons {
     display: flex;
     flex-wrap: wrap;
@@ -53,6 +57,7 @@
     color: var(--color_primary);
 }
 
+/* image */
 .detail_container > img {
     display: block;
     width: 100%;
@@ -63,6 +68,7 @@
     box-shadow: var(--card_shadow);
 }
 
+/* content */
 .content {
     margin-bottom: 26px;
 }
@@ -73,6 +79,7 @@
     line-height: 1.8;
 }
 
+/* tags */
 .tags {
     display: flex;
     flex-wrap: wrap;
@@ -90,6 +97,7 @@
     font-weight: 600;
 }
 
+/* share */
 .social {
     margin-bottom: 30px;
     padding: 16px;
@@ -105,6 +113,7 @@
     font-weight: 600;
 }
 
+/* map */
 .map_box {
     margin-bottom: 34px;
     overflow: hidden;
@@ -116,6 +125,7 @@
     display: block;
 }
 
+/* comments */
 .comments_posts,
 .comment_form {
     margin-top: 30px;
@@ -240,6 +250,7 @@
     background-color: var(--color_dark);
 }
 
+/* mobile */
 @media (max-width: 700px) {
     .detail_container {
         width: min(100% - 24px, 900px);

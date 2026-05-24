@@ -4,6 +4,7 @@ session_start();
 
 require '../config/connection.php';
 
+// check post id
 if (!isset($_GET['id']) || empty($_GET['id'])) {
     header('Location: index.php');
     exit;
@@ -13,6 +14,7 @@ $post_id = $_GET['id'];
 $id_user = $_SESSION['id_user'] ?? null;
 $role = $_SESSION['role'] ?? null;
 
+// get post
 $stmt = $conn->prepare("
     select posts.*, categories.cat_name, users.user_name
     from posts
@@ -29,6 +31,7 @@ if (!$post) {
     exit;
 }
 
+// check permission
 $can_view_unpublished = $role === 'admin' || ($id_user !== null && $post['user_id'] == $id_user);
 
 if ($post['status'] !== 'published' && !$can_view_unpublished) {
@@ -61,6 +64,7 @@ if ($post['status'] !== 'published' && !$can_view_unpublished) {
 
     <div class="detail_container">
 
+        <!-- category -->
         <div class="detail_category">
             <i class="fa-solid fa-layer-group"></i> TANGER / <span class="cat_name"><?= htmlspecialchars($post['cat_name']); ?></span>
         </div>
@@ -68,12 +72,14 @@ if ($post['status'] !== 'published' && !$can_view_unpublished) {
 
         <h1><?= htmlspecialchars($post['title']); ?></h1>
 
+        <!-- post info -->
         <div class="icons">
             <span><i class="fa-solid fa-calendar-days"></i><?= date('M d, Y', strtotime($post['created_at'])); ?></span>
             <span><i class="fa-solid fa-circle-user"></i>By <?= htmlspecialchars($post['user_name'] ?? 'Admin'); ?></span>
             
         </div>
 
+        <!-- rejection reason -->
         <?php if ($post['status'] === 'rejected' && !empty($post['rejection_reason'])): ?>
             <div class="social">
                 <i class="fa-solid fa-ban"></i> Rejection reason:
@@ -81,13 +87,16 @@ if ($post['status'] !== 'published' && !$can_view_unpublished) {
             </div>
         <?php endif; ?>
 
+        <!-- image -->
         <img src="<?= htmlspecialchars($post['image']); ?>" width="400px" alt="<?= htmlspecialchars($post['title']); ?>">
 
+        <!-- content -->
         <div class="content">
             <?= nl2br(htmlspecialchars($post['content'])); ?>
         </div>
 
 
+        <!-- tags -->
         <div class="tags">
             <span><i class="fa-solid fa-hashtag"></i>Tangier</span>
             <span><i class="fa-solid fa-hashtag"></i>Nightlife</span>
@@ -97,10 +106,12 @@ if ($post['status'] !== 'published' && !$can_view_unpublished) {
         </div>
 
 
+        <!-- share links -->
         <div class="social">
             <i class="fas fa-share-alt"></i> Share: <a href="#">Facebook</a> /<a href="#">Twitter</a> /<a href="#">WhatsApp</a>
         </div>
 
+        <!-- map -->
         <?php if (!empty($post['map_link'])): ?>
         <div class="map_box">
             <iframe
@@ -116,6 +127,7 @@ if ($post['status'] !== 'published' && !$can_view_unpublished) {
         <?php endif; ?>
 
 
+        <!-- comments -->
         <div class="comments_posts">
             <div class="comment_title">
                 <i class="fa-solid fa-comment-dots"></i> Comments

@@ -3,16 +3,19 @@
 session_start();
 require '../config/connection.php';
 
+// check login
 if (!isset($_SESSION['id_user'])) {
     header("Location: login.php");
     exit();
 }
 
+// check admin
 if ($_SESSION['role'] !== 'admin') {
     header("Location: dashboard.php");
     exit();
 }
 
+// check post id
 if (!isset($_GET['id'])) {
     header("Location: dashboard.php");
     exit();
@@ -22,6 +25,7 @@ $post_id = $_GET['id'];
 $id_user = $_SESSION['id_user'];
 $error = "";
 
+// get post
 $stmt = $conn->prepare("
     select posts.*, categories.cat_name, users.user_name
     from posts
@@ -38,11 +42,14 @@ if (!$post) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // get reason
     $rejection_reason = trim($_POST['rejection_reason']);
 
+    // validation
     if (empty($rejection_reason)) {
         $error = "Rejection reason is required.";
     } else {
+        // reject post
         $stmt = $conn->prepare("
             update posts
             set status = 'rejected',
@@ -83,6 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <?php require '../includes/header.php'; ?>
 
 <main class="dashboard_page">
+    <!-- header -->
     <section class="dashboard_head">
         <div>
             <span class="dashboard_label">
@@ -100,6 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </a>
     </section>
 
+    <!-- reject form -->
     <section class="reject_box">
         <?php if (!empty($error)): ?>
             <p class="error_message"><?= htmlspecialchars($error); ?></p>

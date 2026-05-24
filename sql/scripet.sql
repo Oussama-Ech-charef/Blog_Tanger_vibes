@@ -1,9 +1,11 @@
 
 
+-- create database
 create database if not exists tangier_blog;
 
 use tangier_blog;
 
+-- users table
 create table if not exists users (
     id_user int auto_increment primary key,
     user_name varchar(100) not null,
@@ -15,6 +17,7 @@ create table if not exists users (
 
 
 
+-- categories table
 create table if not exists categories (
     id_category int auto_increment primary key,
     cat_name varchar(100) not null unique,
@@ -23,6 +26,7 @@ create table if not exists categories (
 
 
 
+-- posts table
 create table if not exists posts (
     id_post int auto_increment primary key,
     category_id int not null,
@@ -49,6 +53,7 @@ create table if not exists posts (
 
 
 
+-- default categories
 INSERT INTO categories (cat_name) VALUES
      ('Beaches'),
     ('Food & Restaurants'),

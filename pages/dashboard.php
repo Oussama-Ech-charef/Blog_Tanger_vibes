@@ -3,6 +3,7 @@ session_start();
 require '../config/connection.php';
 
 
+// check login
 if (!isset($_SESSION['id_user'])) {
     header("Location: login.php");
     exit();
@@ -12,6 +13,7 @@ $id_user = $_SESSION['id_user'];
 $user_name = $_SESSION['user_name'];
 $role = $_SESSION['role'];
 
+// get posts
 if ($role === 'admin') {
     $stmt = $conn->prepare("
         select posts.*, categories.cat_name, users.user_name
@@ -34,6 +36,7 @@ if ($role === 'admin') {
 
 $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+// count posts
 $total_posts = count($posts);
 $pending_posts = 0;
 $published_posts = 0;
@@ -62,6 +65,7 @@ foreach ($posts as $post) {
 <?php require '../includes/header.php'; ?>
 
 <main class="dashboard_page">
+    <!-- header -->
     <section class="dashboard_head">
         <div>
             <span class="dashboard_label">
@@ -78,6 +82,7 @@ foreach ($posts as $post) {
         </a>
     </section>
 
+    <!-- stats -->
     <section class="stats_grid">
         <div class="stat_card">
             <span>Total Posts</span>
@@ -100,6 +105,7 @@ foreach ($posts as $post) {
         </div>
     </section>
 
+    <!-- posts table -->
     <section class="posts_box">
         <div class="box_head">
             <h2>Posts</h2>
@@ -151,12 +157,14 @@ foreach ($posts as $post) {
 
                                 <td>
                                     <div class="table_actions">
+                                        <!-- view -->
                                         <a href="#view_post_<?= $post['id_post']; ?>" class="action_btn view">
                                             <i class="fa-solid fa-eye"></i>
                                             <span>View</span>
                                         </a>
 
                                         <?php if ($post['user_id'] == $id_user): ?>
+                                            <!-- edit -->
                                             <a href="edete.php?id=<?= $post['id_post']; ?>" class="action_btn edit">
                                                 <i class="fa-solid fa-pen"></i>
                                                 <span>Edit</span>
@@ -165,6 +173,7 @@ foreach ($posts as $post) {
 
                                         <?php if ($role === 'admin' && $post['user_id'] != $id_user): ?>
                                             <?php if ($post['status'] !== 'published'): ?>
+                                                <!-- approve -->
                                                 <a href="../includes/actions.php?action=approve&id=<?= $post['id_post']; ?>" class="action_btn approve">
                                                     <i class="fa-solid fa-check"></i>
                                                     <span>Approve</span>
@@ -172,6 +181,7 @@ foreach ($posts as $post) {
                                             <?php endif; ?>
 
                                             <?php if ($post['status'] !== 'rejected'): ?>
+                                                <!-- reject -->
                                                 <a href="reject.php?id=<?= $post['id_post']; ?>" class="action_btn reject">
                                                     <i class="fa-solid fa-xmark"></i>
                                                     <span>Reject</span>
@@ -180,12 +190,14 @@ foreach ($posts as $post) {
                                         <?php endif; ?>
 
                                         <?php if ($role !== 'admin' && $post['status'] === 'rejected' && !empty($post['rejection_reason'])): ?>
+                                            <!-- reason -->
                                             <a href="#reject_reason_<?= $post['id_post']; ?>" class="action_btn reason">
                                                 <i class="fa-solid fa-circle-info"></i>
                                                 <span>Reason</span>
                                             </a>
                                         <?php endif; ?>
 
+                                        <!-- delete -->
                                         <a href="delet.php?id=<?= $post['id_post']; ?>" class="action_btn delete"  onclick="return confirm('Are you sure you want to delete this post?');">
                                             <i class="fa-solid fa-trash"></i>
                                             <span>Delete</span>
@@ -193,6 +205,7 @@ foreach ($posts as $post) {
                                     </div>
 
 
+                                    <!-- view modal -->
                                     <div id="view_post_<?= $post['id_post']; ?>" class="view_modal">
                                         <div class="view_card">
 
@@ -227,6 +240,7 @@ foreach ($posts as $post) {
                                     </div>
 
                                     <?php if ($role !== 'admin' && $post['status'] === 'rejected' && !empty($post['rejection_reason'])): ?>
+                                        <!-- reason modal -->
                                         <div id="reject_reason_<?= $post['id_post']; ?>" class="reason_modal">
                                             <div class="reason_card">
                                                 <div class="reason_head">

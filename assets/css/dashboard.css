@@ -1,9 +1,11 @@
+/* page */
 .dashboard_page {
     max-width: 1200px;
     margin: 90px auto 48px;
     padding: 0 32px;
 }
 
+/* header */
 .dashboard_head {
     display: flex;
     align-items: center;
@@ -36,6 +38,7 @@
     line-height: 1.7;
 }
 
+/* button */
 .add_post_btn {
     display: inline-flex;
     align-items: center;
@@ -47,6 +50,7 @@
     font-weight: 700;
 }
 
+/* stats */
 .stats_grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -75,6 +79,7 @@
     font-size: 30px;
 }
 
+/* posts box */
 .posts_box {
     border: 1px solid var(--color_border);
     border-radius: 8px;
@@ -93,6 +98,7 @@
     font-size: 22px;
 }
 
+/* table */
 .table_wrap {
     position: relative;
     overflow-x: auto;
@@ -165,6 +171,7 @@ tbody tr:last-child td {
     white-space: nowrap;
 }
 
+/* status */
 .status {
     display: inline-flex;
     padding: 5px 10px;
@@ -198,6 +205,7 @@ tbody tr:last-child td {
     line-height: 1.5;
 }
 
+/* actions */
 .table_actions {
     display: flex;
     align-items: center;
@@ -256,6 +264,7 @@ tbody tr:last-child td {
     filter: brightness(0.97);
 }
 
+/* reason modal */
 .reason_modal {
     position: fixed;
     inset: 0;
@@ -336,7 +345,7 @@ tbody tr:last-child td {
 }
 
 
-/* card view  */
+/* view modal */
 
 .view_modal {
     position: fixed;
@@ -438,7 +447,7 @@ tbody tr:last-child td {
     font-size: 15px;
 }
 
-
+/* mobile */
 @media (max-width: 700px) {
     .dashboard_page {
         margin: 90px auto 30px;

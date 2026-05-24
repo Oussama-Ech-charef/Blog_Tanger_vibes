@@ -1,4 +1,4 @@
-/* Footer Base */
+/* footer */
 .footer {
     background-color: var(--bg_color);
     border-top: 1px solid var(--border_light);
@@ -15,7 +15,7 @@
     gap: 40px;
 }
 
-/* Footer Logo  */
+/* logo */
 .footer .logo {
     display: flex;
     align-items: center;
@@ -43,7 +43,7 @@
     font-size: 0.95rem;
 }
 
-/* Footer Links & Categories */
+/* links */
 .footer .title {
     color: var(--color_dark, #111827);
     font-size: 1.1rem;
@@ -70,7 +70,7 @@ ul.footer_links {
     color: var(--color_primary, #2563eb);
 }
 
-/* Footer Socials */
+/* social */
 .footer_socials {
     display: flex;
     flex-direction: column;
@@ -101,7 +101,7 @@ ul.footer_links {
     background-color: var(--border_light, #e5e7eb);
 }
 
-/* Footer Bottom */
+/* bottom */
 .footer_bottom {
     border-top: 1px solid var(--border_light, #e5e7eb);
     padding: 24px 32px;
@@ -114,13 +114,14 @@ ul.footer_links {
     margin: 0;
 }
 
-/* Responsive Design */
+/* tablet */
 @media (max-width: 900px) {
     .footer_top {
         grid-template-columns: 1fr 1fr;
     }
 }
 
+/* mobile */
 @media (max-width: 600px) {
     .footer_top {
         grid-template-columns: 1fr;

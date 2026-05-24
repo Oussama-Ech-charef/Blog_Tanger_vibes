@@ -4,7 +4,7 @@
 
     <div class="footer_top">
         
-        <!-- logo and content-->
+        <!-- logo -->
         <div class="footer_logo">
             <a href="../pages/index.php" class="logo">
                 <div class="logo_icon"><i class="fa-solid fa-compass"></i></div>
@@ -16,7 +16,7 @@
             </p>
         </div>
 
-        <!-- navlinks-->
+        <!-- links -->
         <div class="footer_links">
             <h4 class="title">Quick Links</h4>
             <ul class="footer_links">
@@ -25,7 +25,7 @@
             </ul>
         </div>
 
-        <!-- category -->
+        <!-- categories -->
    
         <div class="footer_category">
             <h4 class="title">Categories</h4>
@@ -54,7 +54,7 @@
 
     </div>
 
-     <!-- copiright -->
+     <!-- copyright -->
     <div class="footer_bottom">
         <p class="footer_copy">
             &copy; 2026 TangierVibes. Created with passion for Tangier.

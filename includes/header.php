@@ -2,6 +2,7 @@
  
 
 
+ // start session if needed
  if (session_status() === PHP_SESSION_NONE) {
 
     session_start();
@@ -28,7 +29,7 @@
                         <li><a href="../pages/explor.php" class="nav_link">Explore</a></li>
                     </ul>
 
-                   <!-- search desctop -->
+                   <!-- search desktop -->
                     <div class="search_desctop">
                         <form action="#" class="search_desctop_form">
                             <i class="fa-solid fa-magnifying-glass search_icon"></i>
@@ -38,6 +39,7 @@
                     </div>
 
                     
+                    <!-- auth links -->
                     <div class="auth_actions_desctop">
 
 
@@ -66,6 +68,7 @@
 
 
         </div>
+        <!-- mobile menu -->
         <div class="header_nav_mobile">
 
                     <!-- close menu  -->
@@ -78,7 +81,7 @@
 
 
 
-                    <!-- search desctop -->
+                    <!-- search mobile -->
                     <div class="search_mobile">
                         <form action="#" class="search_mobile_form">
                             <i class="fa-solid fa-magnifying-glass search_icon"></i>
@@ -89,17 +92,18 @@
 
                     
 
-                     <!-- links  desctope-->
+                     <!-- links mobile -->
 
                     <ul class="nav_links mobil">
                         <li><a href="../pages/index.php" class="nav_link">Home</a></li>
                         <li><a href="../pages/explor.php" class="nav_link">Explore</a></li>
                     </ul>
 
-                   
 
 
 
+
+                    <!-- auth links mobile -->
                     <div class="auth_actions_mobil">
                             <?php if (isset($_SESSION['id_user'])): ?>
 

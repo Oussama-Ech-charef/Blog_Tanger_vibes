@@ -2,6 +2,7 @@
 session_start();
 require '../config/connection.php';
 
+// check login
 if (!isset($_SESSION['id_user'])) {
     header("Location: login.php");
     exit();
@@ -13,7 +14,7 @@ $role = $_SESSION['role'];
 
 $error = "";
 
-
+// get categories
 $cat_stmt = $conn->prepare("select * from categories order by cat_name asc");
 
 $cat_stmt->execute();
@@ -22,23 +23,27 @@ $categories = $cat_stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // get form values
     $title = trim($_POST['title']);
     $category_id = $_POST['category_id'];
     $content = trim($_POST['content']);
     $map_link = trim($_POST['map_link'] ?? '');
     $publish_option = $_POST['publish_option'] ?? 'publish';
 
-if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
-    $map_link = $matches[1];
-}
+    // get map src
+    if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
+        $map_link = $matches[1];
+    }
 
 
+    // validation
     if (empty($title) || empty($category_id) || empty($content)) {
         $error = "Title, category and content are required.";
     }
 
     $image = null;
 
+    // upload image
     if (!empty($_FILES['image']['name'])) {
         $upload_dir = "../assets/uploads/";
 
@@ -56,7 +61,7 @@ if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
     if (empty($error)) {
         
 
-
+        // status
         if ($publish_option === 'draft') {
             $status = 'draft';
             $approved_by = null;
@@ -74,6 +79,7 @@ if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
         }
 
 
+        // insert post
         $stmt = $conn->prepare("
             insert into posts (
                 category_id,
@@ -148,6 +154,7 @@ if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
 
 <main class="dashboard_page">
 
+    <!-- header -->
     <section class="dashboard_head">
         <div>
             <span class="dashboard_label">
@@ -168,6 +175,7 @@ if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
         </a>
     </section>
 
+    <!-- form -->
     <section class="form_box">
 
                 <?php if (!empty($error)): ?>
@@ -176,9 +184,11 @@ if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
 
                 <form action="add_post.php" method="POST" class="post_form" enctype="multipart/form-data">
 
+                    <!-- title -->
                     <label for="title">Title</label>
                     <input type="text" id="title" name="title" placeholder="Post title" required>
 
+                    <!-- category and status -->
                     <div class="form_row">
                         <div class="form_group">
                             <label for="category_id">Category</label>
@@ -202,6 +212,7 @@ if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
                         </div>
                     </div>
 
+                    <!-- image and map -->
                     <div class="form_row">
                         <div class="form_group">
                             <label for="image">Image</label>
@@ -214,9 +225,11 @@ if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
                         </div>
                     </div>
 
+                    <!-- content -->
                     <label for="content">Content</label>
                     <textarea id="content" name="content" placeholder="Write post content..." required></textarea>
 
+                    <!-- button -->
                     <button type="submit" class="add_post_btn">
                         <i class="fa-solid fa-paper-plane"></i>
                         Publish
