@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
 
-            header("Location: index.php");
+            header("Location: dashboard.php");
             exit();
         } else {
             $error = "Email or password is incorrect.";

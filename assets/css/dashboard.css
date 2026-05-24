@@ -53,7 +53,7 @@
 /* stats */
 .stats_grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(5, 1fr);
     gap: 18px;
     margin-bottom: 28px;
 }
@@ -447,6 +447,38 @@ tbody tr:last-child td {
     font-size: 15px;
 }
 
+
+.scroll_table {
+    display: none;
+}
+
+
+/* scroll table  */
+@media (max-width: 900px) {
+    .scroll_table {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        
+        gap: 8px;
+        padding: 12px 18px;
+        color: var(--color_gray);
+        font-size: 13px;
+        font-weight: 700;
+         border-bottom: 1px solid var(--color_border);
+        background: var(--color_light);
+        
+    }
+
+    .scroll_table i {
+        color: var(--color_primary);
+        font-size: 17px;
+    }
+}
+
+
+
+
 /* mobile */
 @media (max-width: 700px) {
     .dashboard_page {
@@ -504,6 +536,9 @@ tbody tr:last-child td {
     .view_head h3 {
         font-size: 20px;
     }
+
+
+    
 }
 
 @media (max-width: 420px) {

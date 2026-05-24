@@ -41,11 +41,13 @@ $total_posts = count($posts);
 $pending_posts = 0;
 $published_posts = 0;
 $rejected_posts = 0;
+$draft_posts = 0;
 
 foreach ($posts as $post) {
     if ($post['status'] === 'pending') $pending_posts++;
     if ($post['status'] === 'published') $published_posts++;
     if ($post['status'] === 'rejected') $rejected_posts++;
+    if ($post['status'] === 'draft') $draft_posts++;
 }
 ?>
 
@@ -100,6 +102,11 @@ foreach ($posts as $post) {
         </div>
 
         <div class="stat_card">
+            <span>Draft</span>
+            <strong><?= $draft_posts; ?></strong>
+        </div>
+
+        <div class="stat_card">
             <span>Rejected</span>
             <strong><?= $rejected_posts; ?></strong>
         </div>
@@ -110,6 +117,13 @@ foreach ($posts as $post) {
         <div class="box_head">
             <h2>Posts</h2>
         </div>
+
+        <p class="scroll_table">
+            <i class="fa-solid fa-arrow-left-long"></i>
+            Scroll table
+            <i class="fa-solid fa-arrow-right-long"></i>
+        </p>
+
 
         <?php if (!empty($posts)): ?>
             <div class="table_wrap">
