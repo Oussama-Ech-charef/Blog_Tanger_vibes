@@ -196,6 +196,11 @@ tbody tr:last-child td {
     color: #b91c1c;
 }
 
+.status.draft {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
 .reject_reason {
     max-width: 260px;
     margin-top: 8px;
