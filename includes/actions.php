@@ -33,7 +33,7 @@ if ($action === 'approve') {
             approved_by = ?,
             approved_at = now(),
             rejection_reason = null
-        where id_post = ?
+        where id_post = ? and status = 'pending'
     ");
     $stmt->execute([$id_user, $post_id]);
 }

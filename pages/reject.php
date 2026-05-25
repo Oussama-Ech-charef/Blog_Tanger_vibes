@@ -56,7 +56,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 approved_by = :approved_by,
                 approved_at = now(),
                 rejection_reason = :rejection_reason
-            where id_post = :post_id
+            where id_post = :post_id and status = 'pending'
         ");
 
         $stmt->execute([

@@ -20,18 +20,23 @@ if ($role === 'admin') {
         from posts
         inner join categories on posts.category_id = categories.id_category
         left join users on posts.user_id = users.id_user
+        where posts.status != 'draft' or posts.user_id = :id_user
         order by posts.created_at desc
     ");
-    $stmt->execute();
+    $stmt->execute([
+        ':id_user' => $id_user
+    ]);
 } else {
     $stmt = $conn->prepare("
         select posts.*, categories.cat_name
         from posts
         inner join categories on posts.category_id = categories.id_category
-        where posts.user_id = ?
+        where posts.user_id = :id_user
         order by posts.created_at desc
     ");
-    $stmt->execute([$id_user]);
+    $stmt->execute([
+        ':id_user' => $id_user
+    ]);
 }
 
 $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -186,7 +191,7 @@ foreach ($posts as $post) {
                                         <?php endif; ?>
 
                                         <?php if ($role === 'admin' && $post['user_id'] != $id_user): ?>
-                                            <?php if ($post['status'] !== 'published'): ?>
+                                            <?php if ($post['status'] === 'pending'): ?>
                                                 <!-- approve -->
                                                 <a href="../includes/actions.php?action=approve&id=<?= $post['id_post']; ?>" class="action_btn approve">
                                                     <i class="fa-solid fa-check"></i>
@@ -194,7 +199,7 @@ foreach ($posts as $post) {
                                                 </a>
                                             <?php endif; ?>
 
-                                            <?php if ($post['status'] !== 'rejected'): ?>
+                                            <?php if ($post['status'] === 'pending'): ?>
                                                 <!-- reject -->
                                                 <a href="reject.php?id=<?= $post['id_post']; ?>" class="action_btn reject">
                                                     <i class="fa-solid fa-xmark"></i>
