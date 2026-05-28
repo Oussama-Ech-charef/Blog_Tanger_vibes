@@ -75,10 +75,21 @@ $rejected_posts = 0;
 $draft_posts = 0;
 
 foreach ($posts as $post) {
-    if ($post['status'] === 'pending') $pending_posts++;
-    if ($post['status'] === 'published') $published_posts++;
-    if ($post['status'] === 'rejected') $rejected_posts++;
-    if ($post['status'] === 'draft') $draft_posts++;
+    if ($post['status'] === 'pending') {
+        $pending_posts++;
+    }
+
+    if ($post['status'] === 'published') {
+        $published_posts++;
+    }
+
+    if ($post['status'] === 'rejected') {
+        $rejected_posts++;
+    }
+
+    if ($post['status'] === 'draft') {
+        $draft_posts++;
+    }
 }
 ?>
 
@@ -195,7 +206,7 @@ foreach ($posts as $post) {
 
                                 <?php if ($role === 'admin'): ?>
                                     <td>
-                                        <?= htmlspecialchars($post['user_name'] ?? 'admin'); ?>
+                                        <?= htmlspecialchars($post['user_name']); ?>
                                     </td>
                                 <?php endif; ?>
 
@@ -205,7 +216,9 @@ foreach ($posts as $post) {
                                     </span>
                                 </td>
 
-                                <td class="date_cell"><?= date('d/m/y', strtotime($post['created_at'])); ?></td>
+                                <td class="date_cell">
+                                    <?= date('d/m/y', strtotime($post['created_at'])); ?>
+                                </td>
 
                                 <td>
                                     <div class="table_actions">

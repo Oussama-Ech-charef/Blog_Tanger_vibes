@@ -31,9 +31,12 @@ $stmt = $conn->prepare("
     from posts
     inner join categories on posts.category_id = categories.id_category
     left join users on posts.user_id = users.id_user
-    where posts.id_post = ?
+    where posts.id_post = :id_post
 ");
-$stmt->execute([$post_id]);
+$stmt->execute([
+    ':id_post' => $post_id
+]);
+
 $post = $stmt->fetch(PDO::FETCH_ASSOC);
 
 if (!$post) {
