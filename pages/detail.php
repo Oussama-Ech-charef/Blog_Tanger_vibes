@@ -18,8 +18,8 @@ $role = $_SESSION['role'] ?? null;
 $stmt = $conn->prepare("
     select posts.*, categories.cat_name, users.user_name
     from posts
-    inner join categories on posts.category_id = categories.id_category
-    left join users on posts.user_id = users.id_user
+    inner join categories on posts.id_category = categories.id_category
+    left join users on posts.id_user = users.id_user
     where posts.id_post = :id_post and posts.status = 'published'
 ");
 
@@ -34,7 +34,7 @@ if (!$post) {
 }
 
 // check permission
-$can_view_unpublished = $role === 'admin' || ($id_user !== null && $post['user_id'] == $id_user);
+$can_view_unpublished = $role === 'admin' || ($id_user !== null && $post['id_user'] == $id_user);
 
 if ($post['status'] !== 'published' && !$can_view_unpublished) {
     header('Location: index.php');

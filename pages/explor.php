@@ -6,8 +6,8 @@ require '../config/connection.php';
 $stmt = $conn->prepare("
         select posts.*, categories.cat_name, users.user_name
         from posts
-        inner join categories on posts.category_id = categories.id_category
-        left join users on posts.user_id = users.id_user
+        inner join categories on posts.id_category = categories.id_category
+        left join users on posts.id_user = users.id_user
         where posts.status = 'published'
         order by posts.created_at desc
 ");
@@ -68,11 +68,12 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <section class="explore_filters">
                 
                 <button class="active">All</button>
-                <button>Beach</button>
-                <button>Food</button>
-                <button>Culture</button>
-                <button>Nature</button>
-                <button>City</button>
+                <button>Beaches</button>
+                <button>Food & Restaurants</button>
+                <button>Culture & History</button>
+                <button>Nature & Parks</button>
+                <button>Hotels & Riads</button>
+                <button>Nightlife</button>
 
             </section>
 

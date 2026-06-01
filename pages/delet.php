@@ -21,11 +21,16 @@ $role = $_SESSION['role'];
 
 // delete post
 if ($role === 'admin') {
-    $stmt = $conn->prepare("delete from posts where id_post = ?");
-    $stmt->execute([$post_id]);
+    $stmt = $conn->prepare("delete from posts where id_post = :id_post");
+    $stmt->execute([
+        ':id_post' => $post_id
+    ]);
 } else {
-    $stmt = $conn->prepare("delete from posts where id_post = ? and user_id = ?");
-    $stmt->execute([$post_id, $id_user]);
+    $stmt = $conn->prepare("delete from posts where id_post = :id_post and id_user = :id_user");
+    $stmt->execute([
+        ':id_post' => $post_id,
+        ':id_user' => $id_user
+    ]);
 }
 
 header("Location: dashboard.php");

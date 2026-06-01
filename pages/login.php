@@ -36,8 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
 
         // get user
-        $stmt = $conn->prepare("select * from users where email = ?");
-        $stmt->execute([$email]);
+        $stmt = $conn->prepare("select * from users where email = :email");
+        $stmt->execute([
+            ':email' => $email
+        ]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
 

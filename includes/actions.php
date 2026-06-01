@@ -30,12 +30,15 @@ if ($action === 'approve') {
     $stmt = $conn->prepare("
         update posts
         set status = 'published',
-            approved_by = ?,
+            id_approved_by = :id_approved_by,
             approved_at = now(),
             rejection_reason = null
-        where id_post = ? and status = 'pending'
+        where id_post = :id_post and status = 'pending'
     ");
-    $stmt->execute([$id_user, $post_id]);
+    $stmt->execute([
+        ':id_approved_by' => $id_user,
+        ':id_post' => $post_id
+    ]);
 }
 
 header("Location: ../pages/dashboard.php");

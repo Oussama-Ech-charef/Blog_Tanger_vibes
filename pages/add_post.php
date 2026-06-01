@@ -39,15 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // upload image
     if (!empty($_FILES['image']['name'])) {
-        $upload_dir = "../assets/uploads/";
-
-        if (!is_dir($upload_dir)) {
-            mkdir($upload_dir, 0777, true);
-        }
-
-        $image_name = "post_" . time() . "_" . $_FILES['image']['name'];
-        $image = $upload_dir . $image_name;
-
+        $image = "../assets/uploads/post_" . time() . "_" . $_FILES['image']['name'];
         move_uploaded_file($_FILES['image']['tmp_name'], $image);
     }
 
@@ -76,9 +68,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // insert post
         $stmt = $conn->prepare("
             insert into posts (
-                category_id,
-                user_id,
-                approved_by,
+                id_category,
+                id_user,
+                id_approved_by,
                 title,
                 
                 image,
@@ -86,9 +78,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 status,
                 approved_at
             ) values (
-                :category_id, 
-                :user_id,
-                :approved_by,
+                :id_category, 
+                :id_user,
+                :id_approved_by,
                 :title,
                 
                 :image,
@@ -99,9 +91,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ");
 
         $stmt->execute([
-            ':category_id' => $category_id,
-            ':user_id' => $id_user,
-            ':approved_by' => $approved_by,
+            ':id_category' => $category_id,
+            ':id_user' => $id_user,
+            ':id_approved_by' => $approved_by,
             ':title' => $title,
             
             ':image' => $image,

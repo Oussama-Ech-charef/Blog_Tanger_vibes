@@ -6,8 +6,8 @@ session_start();
  $stmt = $conn->prepare("
         select posts.*, categories.cat_name, users.user_name
         from posts
-        inner join categories on posts.category_id = categories.id_category
-        left join users on posts.user_id = users.id_user
+        inner join categories on posts.id_category = categories.id_category
+        left join users on posts.id_user = users.id_user
         where posts.status = 'published'
         order by posts.created_at desc
         limit 3

@@ -18,9 +18,9 @@ if ($role === 'admin') {
     $stmt = $conn->prepare("
         select posts.*, categories.cat_name, users.user_name
         from posts
-        inner join categories on posts.category_id = categories.id_category
-        left join users on posts.user_id = users.id_user
-        where posts.status != 'draft' or posts.user_id = :id_user
+        inner join categories on posts.id_category = categories.id_category
+        left join users on posts.id_user = users.id_user
+        where posts.status != 'draft' or posts.id_user = :id_user
         order by posts.created_at desc
     ");
     $stmt->execute([
@@ -30,8 +30,8 @@ if ($role === 'admin') {
      $stmt = $conn->prepare("
         select posts.*, categories.cat_name
         from posts
-        inner join categories on posts.category_id = categories.id_category
-        where posts.user_id = :id_user
+        inner join categories on posts.id_category = categories.id_category
+        where posts.id_user = :id_user
         order by posts.created_at desc
     ");
     $stmt->execute([
@@ -195,7 +195,7 @@ foreach ($posts as $post) {
                                             <span>View</span>
                                         </a>
 
-                                        <?php if ($post['user_id'] == $id_user): ?>
+                                        <?php if ($post['id_user'] == $id_user): ?>
                                             <!-- edit -->
                                             <a href="edete.php?id=<?= $post['id_post']; ?>" class="action_btn edit">
                                                 <i class="fa-solid fa-pen"></i>
@@ -203,7 +203,7 @@ foreach ($posts as $post) {
                                             </a>
                                         <?php endif; ?>
 
-                                        <?php if ($role === 'admin' && $post['user_id'] != $id_user): ?>
+                                        <?php if ($role === 'admin' && $post['id_user'] != $id_user): ?>
                                             <?php if ($post['status'] === 'pending'): ?>
                                                 <!-- approve -->
                                                 <a href="../includes/actions.php?action=approve&id=<?= $post['id_post']; ?>" class="action_btn approve">

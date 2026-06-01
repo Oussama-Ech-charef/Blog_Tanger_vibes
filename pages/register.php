@@ -42,9 +42,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 
         // check email exists
-        $stmt = $conn->prepare("select id_user from users where email = ?");
+        $stmt = $conn->prepare("select id_user from users where email = :email");
 
-        $stmt->execute([$email]);
+        $stmt->execute([
+            ':email' => $email
+        ]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
 
             if ($user) {
@@ -58,10 +60,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     // add user
                     $stmt = $conn->prepare("
                             insert into users (user_name, email, password, role)
-                            values (?, ?, ?, 'user')
+                            values (:user_name, :email, :password, 'user')
                     ");
 
-                    $stmt->execute([$name, $email, $hashed_password]);
+                    $stmt->execute([
+                        ':user_name' => $name,
+                        ':email' => $email,
+                        ':password' => $hashed_password
+                    ]);
 
 
                     $_SESSION['success'] = "Account created successfully.";

@@ -21,13 +21,24 @@ $role = $_SESSION['role'];
 $error = "";
 
 // get categories
-$cat_stmt = $conn->prepare("select * from categories order by cat_name asc");
+$cat_stmt = $conn->prepare("
+    select * from categories
+     order by cat_name asc");
+     
 $cat_stmt->execute();
+
 $categories = $cat_stmt->fetchAll(PDO::FETCH_ASSOC);
 
 // get post
-$stmt = $conn->prepare("select * from posts where id_post = ? and user_id = ?");
-$stmt->execute([$post_id, $id_user]);
+$stmt = $conn->prepare("
+    select * from posts
+    where id_post = :id_post and id_user = :id_user
+");
+
+$stmt->execute([
+    ':id_post' => $post_id,
+    ':id_user' => $id_user
+]);
 
 $post = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -45,16 +56,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $image = $post['image'];
 
     // upload image
+    // upload image
     if (!empty($_FILES['image']['name'])) {
-        $upload_dir = "../assets/uploads/";
-
-        if (!is_dir($upload_dir)) {
-            mkdir($upload_dir, 0777, true);
-        }
-
-        $image_name = "post_" . time() . "_" . $_FILES['image']['name'];
-        $image = $upload_dir . $image_name;
-
+        $image = "../assets/uploads/post_" . time() . "_" . $_FILES['image']['name'];
         move_uploaded_file($_FILES['image']['tmp_name'], $image);
     }
 
@@ -85,27 +89,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // update post
         $stmt = $conn->prepare("
             update posts
-            set category_id = :category_id,
+            set id_category = :id_category,
                 title = :title,
                 image = :image,
                 content = :content,
                 status = :status,
-                approved_by = :approved_by,
+                id_approved_by = :id_approved_by,
                 approved_at = :approved_at,
                 rejection_reason = null
-            where id_post = :post_id and user_id = :user_id
+            where id_post = :id_post and id_user = :id_user
         ");
 
         $stmt->execute([
-            ':category_id' => $category_id,
+            ':id_category' => $category_id,
             ':title' => $title,
             ':image' => $image,
             ':content' => $content,
             ':status' => $status,
-            ':approved_by' => $approved_by,
+            ':id_approved_by' => $approved_by,
             ':approved_at' => $approved_at,
-            ':post_id' => $post_id,
-            ':user_id' => $id_user
+            ':id_post' => $post_id,
+            ':id_user' => $id_user
         ]);
 
         header("Location: dashboard.php");
@@ -172,7 +176,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <?php foreach ($categories as $category): ?>
                                 <option 
                                     value="<?= $category['id_category']; ?>"
-                                    <?= $category['id_category'] == $post['category_id'] ? 'selected' : ''; ?>
+                                    <?= $category['id_category'] == $post['id_category'] ? 'selected' : ''; ?>
                                 >
                                     <?= htmlspecialchars($category['cat_name']); ?>
                                 </option>

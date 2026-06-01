@@ -29,8 +29,8 @@ $error = "";
 $stmt = $conn->prepare("
     select posts.*, categories.cat_name, users.user_name
     from posts
-    inner join categories on posts.category_id = categories.id_category
-    left join users on posts.user_id = users.id_user
+    inner join categories on posts.id_category = categories.id_category
+    left join users on posts.id_user = users.id_user
     where posts.id_post = :id_post
 ");
 $stmt->execute([
@@ -56,16 +56,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $conn->prepare("
             update posts
             set status = 'rejected',
-                approved_by = :approved_by,
+                id_approved_by = :id_approved_by,
                 approved_at = now(),
                 rejection_reason = :rejection_reason
-            where id_post = :post_id and status = 'pending'
+            where id_post = :id_post and status = 'pending'
         ");
 
         $stmt->execute([
-            ':approved_by' => $id_user,
+            ':id_approved_by' => $id_user,
             ':rejection_reason' => $rejection_reason,
-            ':post_id' => $post_id
+            ':id_post' => $post_id
         ]);
 
         header("Location: dashboard.php");
