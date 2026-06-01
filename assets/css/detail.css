@@ -43,7 +43,6 @@
 }
 
 .icons span,
-.tags span,
 .comment_header span {
     display: inline-flex;
     align-items: center;
@@ -51,7 +50,6 @@
 }
 
 .icons i,
-.tags i,
 .social i,
 .comment_header i {
     color: var(--color_primary);
@@ -77,24 +75,6 @@
     color: var(--color_dark);
     font-size: 18px;
     line-height: 1.8;
-}
-
-/* tags */
-.tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 28px;
-}
-
-.tags span {
-    padding: 8px 12px;
-    border: 1px solid var(--color_border);
-    border-radius: 8px;
-    background-color: var(--color_light);
-    color: var(--color_gray);
-    font-size: 14px;
-    font-weight: 600;
 }
 
 /* share */

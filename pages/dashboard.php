@@ -12,46 +12,20 @@ if (!isset($_SESSION['id_user'])) {
 $id_user = $_SESSION['id_user'];
 $user_name = $_SESSION['user_name'];
 $role = $_SESSION['role'];
-$filter = $_GET['filter'] ?? 'all';
 
 // get posts
 if ($role === 'admin') {
-
-
-    if ($filter === 'admin') {
-        $stmt = $conn->prepare("
-            select posts.*, categories.cat_name, users.user_name
-            from posts
-            inner join categories on posts.category_id = categories.id_category
-            left join users on posts.user_id = users.id_user
-            where users.role = 'admin'
-            order by posts.created_at desc
-        ");
-        $stmt->execute();
-    }elseif ($filter === 'users') {
-        $stmt = $conn->prepare("
-            select posts.*, categories.cat_name, users.user_name
-            from posts
-            inner join categories on posts.category_id = categories.id_category
-            left join users on posts.user_id = users.id_user
-            where users.role = 'user'
-            and posts.status != 'draft'
-            order by posts.created_at desc
-        ");
-        $stmt->execute();
-    }else {
-        $stmt = $conn->prepare("
-            select posts.*, categories.cat_name, users.user_name
-            from posts
-            inner join categories on posts.category_id = categories.id_category
-            left join users on posts.user_id = users.id_user
-            where posts.status != 'draft' or posts.user_id = :id_user
-            order by posts.created_at desc
-        ");
-        $stmt->execute([
-            ':id_user' => $id_user
-        ]);
-    }
+    $stmt = $conn->prepare("
+        select posts.*, categories.cat_name, users.user_name
+        from posts
+        inner join categories on posts.category_id = categories.id_category
+        left join users on posts.user_id = users.id_user
+        where posts.status != 'draft' or posts.user_id = :id_user
+        order by posts.created_at desc
+    ");
+    $stmt->execute([
+        ':id_user' => $id_user
+    ]);
 } else {
      $stmt = $conn->prepare("
         select posts.*, categories.cat_name
@@ -159,13 +133,6 @@ foreach ($posts as $post) {
         <div class="box_head">
             <h2>Posts</h2>
         </div>
-        <?php if ($role === 'admin'): ?>
-            <div class="filter_buttons">
-                <a href="dashboard.php?filter=all" class="<?= $filter === 'all' ? 'active' : ''; ?>">All</a>
-                <a href="dashboard.php?filter=admin" class="<?= $filter === 'admin' ? 'active' : ''; ?>">Admin</a>
-                <a href="dashboard.php?filter=users" class="<?= $filter === 'users' ? 'active' : ''; ?>">Users</a>
-            </div>
-        <?php endif; ?>
 
         <p class="scroll_table">
             <i class="fa-solid fa-arrow-left-long"></i>

@@ -36,7 +36,6 @@ create table if not exists posts (
    
     image varchar(255),
     content text not null,
-    map_link varchar(1000),
     status enum('draft','pending', 'published', 'rejected') default 'pending',
     rejection_reason text null,
     approved_at timestamp null,

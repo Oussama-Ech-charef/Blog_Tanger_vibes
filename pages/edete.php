@@ -41,14 +41,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = trim($_POST['title']);
     $category_id = $_POST['category_id'];
     $content = trim($_POST['content']);
-    $map_link = trim($_POST['map_link']);
     $publish_option = $_POST['publish_option'] ?? 'publish';
     $image = $post['image'];
-
-    // get map src
-    if (preg_match('/src="([^"]+)"/', $map_link, $matches)) {
-        $map_link = $matches[1];
-    }
 
     // upload image
     if (!empty($_FILES['image']['name'])) {
@@ -95,7 +89,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 title = :title,
                 image = :image,
                 content = :content,
-                map_link = :map_link,
                 status = :status,
                 approved_by = :approved_by,
                 approved_at = :approved_at,
@@ -108,7 +101,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             ':title' => $title,
             ':image' => $image,
             ':content' => $content,
-            ':map_link' => $map_link,
             ':status' => $status,
             ':approved_by' => $approved_by,
             ':approved_at' => $approved_at,
@@ -199,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
 
-                <!-- image and map -->
+                <!-- image -->
                 <div class="form_row">
                     <div class="form_group">
                         <label for="image">Image</label>
@@ -210,11 +202,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 Current image: <?= htmlspecialchars($post['image']); ?>
                             </p>
                         <?php endif; ?>
-                    </div>
-
-                    <div class="form_group">
-                        <label for="map_link">Map link</label>
-                        <input type="text" id="map_link" name="map_link" placeholder="Google Maps embed link" value="<?= htmlspecialchars($post['map_link'] ?? ''); ?>">
                     </div>
                 </div>
 

@@ -149,35 +149,6 @@ tbody tr:last-child td {
     border-bottom: none;
 }
 
-/* buttons fileter  */
-
-.filter_buttons {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    padding: 16px 20px;
-    border-bottom: 1px solid var(--color_border);
-}
-
-.filter_buttons a {
-    padding: 8px 14px;
-    border: 1px solid var(--color_border);
-    border-radius: 8px;
-    color: var(--color_gray);
-    font-size: 13px;
-    font-weight: 700;
-}
-
-.filter_buttons a:hover,
-.filter_buttons a.active {
-    border-color: var(--color_primary);
-    background: var(--color_primary);
-    color: #fff;
-}
-
-
-/* ..  */
-
 .title_cell {
     display: -webkit-box;
     max-width: 260px;

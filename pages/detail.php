@@ -81,14 +81,6 @@ if ($post['status'] !== 'published' && !$can_view_unpublished) {
             
         </div>
 
-        <!-- rejection reason -->
-        <?php if ($post['status'] === 'rejected' && !empty($post['rejection_reason'])): ?>
-            <div class="social">
-                <i class="fa-solid fa-ban"></i> Rejection reason:
-                <?= htmlspecialchars($post['rejection_reason']); ?>
-            </div>
-        <?php endif; ?>
-
         <!-- image -->
         <img src="<?= htmlspecialchars($post['image']); ?>" width="400px" alt="<?= htmlspecialchars($post['title']); ?>">
 
@@ -98,26 +90,15 @@ if ($post['status'] !== 'published' && !$can_view_unpublished) {
         </div>
 
 
-        <!-- tags -->
-        <div class="tags">
-            <span><i class="fa-solid fa-hashtag"></i>Tangier</span>
-            <span><i class="fa-solid fa-hashtag"></i>Nightlife</span>
-            <span><i class="fa-solid fa-hashtag"></i>Beaches</span>
-            <span><i class="fa-solid fa-hashtag"></i>Food</span>
-            <span><i class="fa-solid fa-hashtag"></i>Culture</span>
-        </div>
-
-
         <!-- share links -->
         <div class="social">
             <i class="fas fa-share-alt"></i> Share: <a href="#">Facebook</a> /<a href="#">Twitter</a> /<a href="#">WhatsApp</a>
         </div>
 
-        <!-- map -->
-        <?php if (!empty($post['map_link'])): ?>
+        <!-- map design -->
         <div class="map_box">
             <iframe
-                src="<?= htmlspecialchars($post['map_link']); ?>"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10754.139064625955!2d-5.8367744!3d35.7594653!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xd0b8165f4a90f3d%3A0x127b3b98cb1b5b62!2sTangier%2C%20Morocco!5e0!3m2!1sen!2sma!4v1710000000000!5m2!1sen!2sma"
                 width="100%"
                 height="400"
                 style="border:0;"
@@ -126,14 +107,13 @@ if ($post['status'] !== 'published' && !$can_view_unpublished) {
                 referrerpolicy="no-referrer-when-downgrade">
             </iframe>
         </div>
-        <?php endif; ?>
 
 
         <!-- comments -->
         <div class="comments_posts">
             <div class="comment_title">
                 <i class="fa-solid fa-comment-dots"></i> Comments
-                <span >3</span>
+                <span >1</span>
             </div>
         </div>
 
