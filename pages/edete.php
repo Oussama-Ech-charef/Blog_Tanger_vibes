@@ -55,7 +55,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $publish_option = $_POST['publish_option'] ?? 'publish';
     $image = $post['image'];
 
-    // upload image
+   
     // upload image
     if (!empty($_FILES['image']['name'])) {
         $image = "../assets/uploads/post_" . time() . "_" . $_FILES['image']['name'];

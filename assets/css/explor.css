@@ -44,7 +44,7 @@
     margin-bottom: 32px;
 }
 
-.explore_filters button {
+.explore_filters a {
     border: 1px solid var(--color_border);
     border-radius: 8px;
     padding: 10px 16px;
@@ -55,8 +55,8 @@
     cursor: pointer;
 }
 
-.explore_filters button:hover,
-.explore_filters button.active {
+.explore_filters a:hover,
+.explore_filters a.active {
     border-color: var(--color_primary);
     background-color: var(--color_primary);
     color: var(--bg_color);

@@ -2,17 +2,39 @@
 session_start();
 require '../config/connection.php';
 
-// get published posts
-$stmt = $conn->prepare("
+
+$category_id = $_GET['category'] ?? null;
+
+$stmt = $conn->prepare("select * from categories order by cat_name asc");
+$stmt->execute();
+$categories = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if (!empty($category_id)) {
+    $stmt = $conn->prepare("
+        select posts.*, categories.cat_name, users.user_name
+        from posts
+        inner join categories on posts.id_category = categories.id_category
+        left join users on posts.id_user = users.id_user
+        where posts.status = 'published'
+        and posts.id_category = :category_id
+        order by posts.created_at desc
+    ");
+
+    $stmt->execute([
+        ':category_id' => $category_id
+    ]);
+} else {
+    $stmt = $conn->prepare("
         select posts.*, categories.cat_name, users.user_name
         from posts
         inner join categories on posts.id_category = categories.id_category
         left join users on posts.id_user = users.id_user
         where posts.status = 'published'
         order by posts.created_at desc
-");
+    ");
 
-$stmt->execute();
+    $stmt->execute();
+}
 
 $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
@@ -65,16 +87,19 @@ $posts = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </section>
 
             <!-- filters -->
-            <section class="explore_filters">
-                
-                <button class="active">All</button>
-                <button>Beaches</button>
-                <button>Food & Restaurants</button>
-                <button>Culture & History</button>
-                <button>Nature & Parks</button>
-                <button>Hotels & Riads</button>
-                <button>Nightlife</button>
+           <section class="explore_filters">
+                <a href="explor.php" class="<?= empty($category_id) ? 'active' : ''; ?>">
+                    All
+                </a>
 
+                <?php foreach ($categories as $category): ?>
+                    <a 
+                        href="explor.php?category=<?= $category['id_category']; ?>"
+                        class="<?= $category_id == $category['id_category'] ? 'active' : ''; ?>"
+                    >
+                        <?= htmlspecialchars($category['cat_name']); ?>
+                    </a>
+                <?php endforeach; ?>
             </section>
 
             <!-- posts grid -->
