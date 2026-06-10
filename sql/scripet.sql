@@ -29,7 +29,7 @@ create table if not exists categories (
 create table if not exists posts (
     id_post int auto_increment primary key,
     id_category int not null,
-    id_user int null,
+    id_user int not null,
     id_approved_by int null,
     title varchar(255) not null,
     image varchar(255),
@@ -41,7 +41,7 @@ create table if not exists posts (
     updated_at timestamp default current_timestamp on update current_timestamp,
 
     foreign key (id_category) references categories(id_category) on delete cascade,
-    foreign key (id_user) references users(id_user) on delete set null,
+    foreign key (id_user) references users(id_user) on delete cascade,
     foreign key (id_approved_by) references users(id_user) on delete set null
 );
 
@@ -57,20 +57,4 @@ insert into categories (cat_name) values
 on duplicate key update cat_name = values(cat_name);
 
 
--- demo posts
-insert into posts (
-    id_category,
-    id_user,
-    id_approved_by,
-    title,
-    image,
-    content,
-    status,
-    approved_at
-) values
-    (1, null, null, 'Achakkar Beach', '../assets/images/home.jpg', 'Achakkar Beach is one of the most beautiful coastal spots near Tangier, known for its wide sandy shore, ocean views, and sunset atmosphere.', 'published', now()),
-    (2, null, null, 'Best Moroccan Breakfast in Tangier', '../assets/images/home.jpg', 'Tangier has many cozy cafes where visitors can enjoy msemen, harcha, mint tea, olives, honey, and traditional Moroccan flavors.', 'published', now()),
-    (3, null, null, 'Kasbah Museum', '../assets/images/home.jpg', 'The Kasbah Museum is a cultural place in Tangier that presents the history, architecture, and artistic heritage of the city.', 'published', now()),
-    (4, null, null, 'Perdicaris Park', '../assets/images/home.jpg', 'Perdicaris Park is a peaceful green area in Tangier, perfect for walking, relaxing, and enjoying nature close to the sea.', 'published', now()),
-    (5, null, null, 'A Charming Riad Stay', '../assets/images/home.jpg', 'Traditional riads in Tangier offer calm rooms, Moroccan decoration, and a warm atmosphere close to the old medina.', 'published', now()),
-    (6, null, null, 'Tangier Night Walk', '../assets/images/home.jpg', 'Tangier at night has a special charm, with lively streets, sea air, cafes, and city lights around the corniche and old town.', 'published', now());
+
