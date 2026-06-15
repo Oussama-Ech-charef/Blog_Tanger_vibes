@@ -30,7 +30,7 @@ $stmt = $conn->prepare("
     select posts.*, categories.cat_name, users.user_name
     from posts
     inner join categories on posts.id_category = categories.id_category
-    left join users on posts.id_user = users.id_user
+    inner join users on posts.id_user = users.id_user
     where posts.id_post = :id_post
 ");
 $stmt->execute([
