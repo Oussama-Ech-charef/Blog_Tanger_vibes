@@ -11,8 +11,7 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 }
 
 $post_id = $_GET['id'];
-$id_user = $_SESSION['id_user'] ?? null;
-$role = $_SESSION['role'] ?? null;
+
 
 // get post
 $stmt = $conn->prepare("
@@ -33,13 +32,7 @@ if (!$post) {
     exit;
 }
 
-// check permission
-$can_view_unpublished = $role === 'admin' || ($id_user !== null && $post['id_user'] == $id_user);
 
-if ($post['status'] !== 'published' && !$can_view_unpublished) {
-    header('Location: index.php');
-    exit;
-}
 
 ?>
 
